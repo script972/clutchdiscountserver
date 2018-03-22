@@ -9,18 +9,6 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id)   VALUES (2, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 2);
 
-INSERT INTO card_group(title) VALUES ('Adidas');
-INSERT INTO card_group(title) VALUES ('Madoc');
-INSERT INTO card_group(title) VALUES ('Colins');
-INSERT INTO card_group(title) VALUES ('Oodji');
-INSERT INTO card_group(title) VALUES ('EgoIst');
-INSERT INTO card_group (title) VALUES ('RodiMood');
-
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('0000721395', 'EgoIst', 1, 5, 'грн', 100);
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('367611', 'Adidas all in', 2, 1, '%', 3);
-INSERT INTO card_item (number_card, title, auther_id, card_group, currency, discount) VALUES ('2000000003320', 'RodiMood', 1, 6, '%', 12);
-
-
 INSERT INTO clutchdatabase.position(lat, lng) VALUES ('46.973133', '31.993569');
 INSERT INTO clutchdatabase.position(lat, lng) VALUES ('46.966402', '32.002077');
 INSERT INTO clutchdatabase.position(lat, lng) VALUES (49.435335, 31.309050);
@@ -33,9 +21,6 @@ INSERT INTO clutchdatabase.position(lat, lng) VALUES (46.475966, 30.706975)
 
 
 
-INSERT INTO company(title, position) VALUES ('ДП Адидас Украина', 1);
-INSERT INTO company(title, position) VALUES ('RodiMood', 2);
-
 INSERT INTO country(title, position_id) VALUES ('Украина', 3)
 INSERT INTO country(title, position_id) VALUES ('Беларусь', 4)
 INSERT INTO country(title, position_id) VALUES ('Молдова', 5)
@@ -45,6 +30,29 @@ INSERT INTO clutchdatabase.city(city,  country_id, position_id) VALUES ('Ник�
 INSERT INTO clutchdatabase.city(city,  country_id, position_id) VALUES ('Минск', 2, 7);
 INSERT INTO clutchdatabase.city(city,  country_id, position_id) VALUES ('Кишенев', 3, 8);
 INSERT INTO clutchdatabase.city(city,  country_id, position_id) VALUES ('Одесса', 1, 9);
+
+
+
+
+INSERT INTO clutchdatabase.company(title, position_id, city_id) VALUES ('ДП Адидас Украина', 1, 1);
+INSERT INTO clutchdatabase.company(title, position_id, city_id) VALUES ('RodiMood', 2, 1);
+
+INSERT INTO card_group(title, company_id) VALUES ('Adidas', 1);
+INSERT INTO card_group(title) VALUES ('Madoc');
+INSERT INTO card_group(title) VALUES ('Colins');
+INSERT INTO card_group(title) VALUES ('Oodji');
+INSERT INTO card_group(title) VALUES ('EgoIst');
+INSERT INTO card_group (title, company_id) VALUES ('RodiMood', 6);
+
+INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('0000721395', 'EgoIst', 1, 5, 'грн', 100);
+INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('367611', 'Adidas all in', 2, 1, '%', 3);
+INSERT INTO card_item (number_card, title, auther_id, card_group, currency, discount) VALUES ('2000000003320', 'RodiMood', 1, 6, '%', 12);
+
+
+
+
+
+
 
 
 

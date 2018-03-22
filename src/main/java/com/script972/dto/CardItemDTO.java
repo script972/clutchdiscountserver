@@ -1,15 +1,15 @@
-package com.script972.jto;
+package com.script972.dto;
 
 import com.script972.entity.CardGroup;
 import com.script972.entity.CardItem;
 
-public class CardItemJTO {
+public class CardItemDTO {
 
     private long id;
 
     private String title;
 
-    private UserJTO auther;
+    private UserDTO auther;
 
     /**
      * Card Number
@@ -30,13 +30,13 @@ public class CardItemJTO {
     private String currency;
 
 
-    public CardItemJTO() {
+    public CardItemDTO() {
     }
 
-    public CardItemJTO(CardItem entity){
+    public CardItemDTO(CardItem entity){
         this.id=entity.getId();
         this.title=entity.getTitle();
-        this.auther=new UserJTO(entity.getAuther());
+        this.auther=new UserDTO(entity.getAuther());
         this.number=entity.getNumber();
         this.cardGroup=entity.getCardGroup();
         this.discount=entity.getDiscount();
@@ -72,11 +72,11 @@ public class CardItemJTO {
         this.title = title;
     }
 
-    public UserJTO getAuther() {
+    public UserDTO getAuther() {
         return auther;
     }
 
-    public void setAuther(UserJTO auther) {
+    public void setAuther(UserDTO auther) {
         this.auther = auther;
     }
 

@@ -1,11 +1,14 @@
 package com.script972.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "POSITION")
 public class Position {
 
+    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +20,7 @@ public class Position {
     @Column(name = "lng")
     private double lng;
 
+    @JsonIgnore
     @Column(name = "description")
     private String description;
 

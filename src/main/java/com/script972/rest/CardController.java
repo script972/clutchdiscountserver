@@ -1,6 +1,6 @@
 package com.script972.rest;
 
-import com.script972.jto.CardItemJTO;
+import com.script972.dto.CardItemDTO;
 import com.script972.service.CardItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,7 +27,7 @@ public class CardController {
 
     @RequestMapping( method = GET, value= "/card/all")
     @PreAuthorize("hasRole('USER')")
-    public List<CardItemJTO> loadAll() {
+    public List<CardItemDTO> loadAll() {
         return this.service.findAll();
     }
 

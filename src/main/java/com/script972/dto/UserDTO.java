@@ -1,10 +1,10 @@
-package com.script972.jto;
+package com.script972.dto;
 
 import com.script972.entity.City;
 import com.script972.entity.User;
 
 
-public class UserJTO {
+public class UserDTO {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class UserJTO {
 
     private int rang;
 
-    public UserJTO(User entity){
+    public UserDTO(User entity){
         this.id=entity.getId();
         this.username=entity.getUsername();
         this.firstName=entity.getFirstName();
@@ -33,7 +33,7 @@ public class UserJTO {
         this.rang=entity.getRang();
     }
 
-    public UserJTO(Long id, String username, String firstName, String lastName, String email, City city, String phoneNumber, int rang) {
+    public UserDTO(Long id, String username, String firstName, String lastName, String email, City city, String phoneNumber, int rang) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;

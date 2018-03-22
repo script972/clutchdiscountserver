@@ -1,8 +1,7 @@
 package com.script972.service.impl;
 
+import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
-import com.script972.jto.CompanyJTO;
-import com.script972.repository.CardRepository;
 import com.script972.repository.CompanyRepository;
 import com.script972.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +18,26 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
-    public CompanyJTO findById(Long id) {
-        return new CompanyJTO(repository.findByID(id));
+    public CompanyDTO findById(Long id) {
+        return new CompanyDTO(repository.findByID(id));
     }
 
     @Override
-    public CompanyJTO findByTitle(String title) {
+    public CompanyDTO findByTitle(String title) {
         return null;
     }
 
     @Override
-    public CompanyJTO findByAddress(String address) {
+    public CompanyDTO findByAddress(String address) {
         return null;
     }
 
     @Override
-    public List<CompanyJTO> findAll() {
+    public List<CompanyDTO> findAll() {
         List<Company> list=repository.findAll();
-        List<CompanyJTO> result=new ArrayList<>();
+        List<CompanyDTO> result=new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            result.add(new CompanyJTO(list.get(i)));
+            result.add(new CompanyDTO(list.get(i)));
         }
         return result;
     }

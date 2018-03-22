@@ -6,7 +6,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "Company")
 public class Company {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +15,15 @@ public class Company {
     private String title;
 
     @OneToOne
-    @JoinColumn(name = "position")
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @Column(name = "address")
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     /**
      * Для больших компаний возможность построение иерархии
@@ -29,6 +32,13 @@ public class Company {
     @JoinColumn(name = "company_parent")
     private Company parent;
 
+    /**
+     * Логотип
+     */
+    @Lob
+    @Column(name = "logo")
+    private byte[] imageBinary;
+
 
     @OneToMany(mappedBy = "company")
     private Collection<CardGroup> cardGroup;
@@ -36,14 +46,23 @@ public class Company {
     public Company() {
     }
 
-    public Company(String title, Position position, Company parent, Collection<CardGroup> cardGroup) {
+    public Company(String title, Position position, String address, City city, Company parent, byte[] imageBinary, Collection<CardGroup> cardGroup) {
         this.title = title;
         this.position = position;
+        this.address = address;
+        this.city = city;
         this.parent = parent;
+        this.imageBinary = imageBinary;
         this.cardGroup = cardGroup;
     }
 
+    public byte[] getImageBinary() {
+        return imageBinary;
+    }
 
+    public void setImageBinary(byte[] imageBinary) {
+        this.imageBinary = imageBinary;
+    }
 
     public Collection<CardGroup> getCardGroup() {
         return cardGroup;
@@ -91,5 +110,13 @@ public class Company {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

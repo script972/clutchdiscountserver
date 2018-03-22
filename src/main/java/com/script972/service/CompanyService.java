@@ -1,19 +1,17 @@
 package com.script972.service;
 
-import com.script972.entity.CardItem;
-import com.script972.jto.CardItemJTO;
-import com.script972.jto.CompanyJTO;
+import com.script972.dto.CompanyDTO;
 
 import java.util.List;
 
 public interface CompanyService {
 
-    CompanyJTO findById(Long id);
+    CompanyDTO findById(Long id);
 
-    CompanyJTO findByTitle(String title);
+    CompanyDTO findByTitle(String title);
 
-    CompanyJTO findByAddress(String address);
+    CompanyDTO findByAddress(String address);
 
-    List<CompanyJTO> findAll();
+    List<CompanyDTO> findAll();
 
 }

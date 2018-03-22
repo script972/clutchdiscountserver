@@ -1,8 +1,7 @@
 package com.script972.service.impl;
 
-import com.script972.dao.CardItemDAO;
 import com.script972.entity.CardItem;
-import com.script972.jto.CardItemJTO;
+import com.script972.dto.CardItemDTO;
 import com.script972.repository.CardRepository;
 import com.script972.service.CardItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +27,11 @@ public class CardItemServiceImpl implements CardItemService {
     }
 
     @Override
-    public List<CardItemJTO> findAll() {
+    public List<CardItemDTO> findAll() {
         List<CardItem> cardItems = this.repository.findAll();
-        List<CardItemJTO> jto=new ArrayList<>();
+        List<CardItemDTO> jto=new ArrayList<>();
         for (int i = 0; i < cardItems.size(); i++) {
-            jto.add(new CardItemJTO(cardItems.get(i)));
+            jto.add(new CardItemDTO(cardItems.get(i)));
         }
         return jto;
     }

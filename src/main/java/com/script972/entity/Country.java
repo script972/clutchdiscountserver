@@ -1,5 +1,7 @@
 package com.script972.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -7,6 +9,7 @@ import java.util.Collection;
 @Table(name = "country")
 public class Country {
 
+    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,7 @@ public class Country {
     private String notice;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "country")
     private Collection<City> citys;
 
@@ -32,5 +36,47 @@ public class Country {
 
     public void setCitys(Collection<City> citys) {
         this.citys = citys;
+    }
+
+    public Country(String title, Position position, String notice, Collection<City> citys) {
+        this.title = title;
+        this.position = position;
+        this.notice = notice;
+        this.citys = citys;
+    }
+
+    public Country() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
     }
 }

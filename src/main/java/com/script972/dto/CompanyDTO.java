@@ -1,13 +1,13 @@
-package com.script972.jto;
+package com.script972.dto;
 
 import com.script972.entity.CardGroup;
+import com.script972.entity.City;
 import com.script972.entity.Company;
 import com.script972.entity.Position;
 
-import javax.persistence.*;
 import java.util.Collection;
 
-public class CompanyJTO {
+public class CompanyDTO {
 
     private long id;
 
@@ -17,6 +17,10 @@ public class CompanyJTO {
 
     private String address;
 
+    private City city;
+
+
+
     /**
      * Для больших компаний возможность построение иерархии
      */
@@ -24,13 +28,14 @@ public class CompanyJTO {
 
     private Collection<CardGroup> cardGroup;
 
-    public CompanyJTO(Company company) {
+    public CompanyDTO(Company company) {
         this.id=company.getId();
         this.title=company.getTitle();
         this.position=company.getPosition();
         this.address=company.getAddress();
         this.parent=company.getParent();
         this.cardGroup=company.getCardGroup();
+        this.city=company.getCity();
     }
 
     public long getId() {
@@ -81,9 +86,17 @@ public class CompanyJTO {
         this.cardGroup = cardGroup;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
-        return "CompanyJTO{" +
+        return "CompanyDTO{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", position=" + position +

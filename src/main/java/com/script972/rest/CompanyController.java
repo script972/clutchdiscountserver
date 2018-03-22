@@ -1,8 +1,6 @@
 package com.script972.rest;
 
-import com.script972.jto.CardItemJTO;
-import com.script972.jto.CompanyJTO;
-import com.script972.service.CardItemService;
+import com.script972.dto.CompanyDTO;
 import com.script972.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,7 +21,7 @@ public class CompanyController {
 
     @RequestMapping( method = GET, value= "/company/all")
     @PreAuthorize("hasRole('USER')")
-    public List<CompanyJTO> loadAll() {
+    public List<CompanyDTO> loadAll() {
         return this.service.findAll();
     }
 
