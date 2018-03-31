@@ -31,4 +31,5 @@ public class CardController {
         return this.service.findAll();
     }
 
+
 }
