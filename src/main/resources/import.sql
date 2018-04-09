@@ -49,9 +49,9 @@ INSERT INTO card_group(title) VALUES ('Oodji');
 INSERT INTO card_group(title) VALUES ('EgoIst');
 INSERT INTO card_group (title, company_id) VALUES ('RodiMood', 2);
 
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('0000721395', 'EgoIst', 1, 5, 'грн', 100);
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount) VALUES ('367611', 'Adidas all in', 2, 1, '%', 3);
-INSERT INTO card_item (number_card, title, auther_id, card_group, currency, discount) VALUES ('2000000003320', 'RodiMood', 1, 6, '%', 12);
+INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount, available) VALUES ('0000721395', 'EgoIst', 1, 5, 'грн', 100, TRUE );
+INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount, available) VALUES ('367611', 'Adidas all in', 2, 1, '%', 3, TRUE );
+INSERT INTO card_item (number_card, title, auther_id, card_group, currency, discount, available) VALUES ('2000000003320', 'RodiMood', 1, 6, '%', 12, TRUE );
 
 
 

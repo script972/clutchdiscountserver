@@ -3,8 +3,10 @@ package com.script972.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.dto.CardItemPutDTO;
 import javafx.scene.Parent;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -54,6 +56,11 @@ public class CardItem {
      */
     private Integer score;
 
+    /**
+     * @TIMESTAMP when card added
+     */
+    @Column(name = "date_added")
+    private Timestamp dateAdded = new Timestamp(DateTime.now().getMillis());
 
     /**
      * Auther of card
@@ -77,7 +84,7 @@ public class CardItem {
     }
 
     public CardItem(String title, String number, int discount, String currency, String notice, Boolean available,
-                    Integer score, User auther, CardGroup cardGroup, List<User> accessUsers) {
+                    Integer score, Timestamp dateAdded, User auther, CardGroup cardGroup, List<User> accessUsers) {
         this.title = title;
         this.number = number;
         this.discount = discount;
@@ -85,6 +92,7 @@ public class CardItem {
         this.notice = notice;
         this.available = available;
         this.score = score;
+        this.dateAdded = dateAdded;
         this.auther = auther;
         this.cardGroup = cardGroup;
         this.accessUsers = accessUsers;
@@ -191,6 +199,14 @@ public class CardItem {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Timestamp getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Timestamp dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     @Override

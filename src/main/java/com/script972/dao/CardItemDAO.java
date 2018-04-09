@@ -24,7 +24,7 @@ public class CardItemDAO implements CardRepository {
 
     @Override
     public List<CardItem> findAll() {
-        return (List<CardItem>) entityManager.createQuery("from CardItem ").getResultList();
+        return (List<CardItem>) entityManager.createQuery("from CardItem ci where ci.available=TRUE order by ci.score").getResultList();
 
     }
 
@@ -35,14 +35,15 @@ public class CardItemDAO implements CardRepository {
 
     @Override
     public CardItem findById(Long id) {
-        return (CardItem)entityManager.createQuery("from CardItem ca where ca.id=:paramOne")
+        return (CardItem)entityManager.createQuery("from CardItem ca where ca.id=:paramOne order by ca.score desc")
                 .setParameter("paramOne", id)
                 .getResultList().get(0);
     }
 
     @Override
     public List<CardItem> findByOwner(User user) {
-        return (List<CardItem>) entityManager.createQuery("select distinct ca from CardItem ca where ca.auther = :auther")
+        return (List<CardItem>) entityManager.createQuery("select distinct ca from CardItem ca where ca.auther = :auther " +
+                "order by ca.score desc ")
                 .setParameter("auther", user)
                 .getResultList();
     }
