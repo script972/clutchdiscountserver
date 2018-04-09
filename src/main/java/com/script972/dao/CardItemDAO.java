@@ -1,6 +1,8 @@
 package com.script972.dao;
 
+import com.script972.dto.CardItemDTO;
 import com.script972.entity.CardItem;
+import com.script972.entity.User;
 import com.script972.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,25 @@ public class CardItemDAO implements CardRepository {
     public List<CardItem> findAll() {
         return (List<CardItem>) entityManager.createQuery("from CardItem ").getResultList();
 
+    }
+
+    @Override
+    public void addItemCard(CardItem card) {
+        entityManager.persist(card);
+    }
+
+    @Override
+    public CardItem findById(Long id) {
+        return (CardItem)entityManager.createQuery("from CardItem ca where ca.id=:paramOne")
+                .setParameter("paramOne", id)
+                .getResultList().get(0);
+    }
+
+    @Override
+    public List<CardItem> findByOwner(User user) {
+        return (List<CardItem>) entityManager.createQuery("select distinct ca from CardItem ca where ca.auther = :auther")
+                .setParameter("auther", user)
+                .getResultList();
     }
 
 }

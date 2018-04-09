@@ -20,7 +20,7 @@ public class UserDTO {
 
     private String phoneNumber;
 
-    private int rang;
+    private int score;
 
     public UserDTO(User entity){
         this.id=entity.getId();
@@ -30,19 +30,9 @@ public class UserDTO {
         this.email=entity.getEmail();
         this.city=entity.getCity();
         this.phoneNumber=entity.getPhoneNumber();
-        this.rang=entity.getRang();
+        this.score=entity.getScore();
     }
 
-    public UserDTO(Long id, String username, String firstName, String lastName, String email, City city, String phoneNumber, int rang) {
-        this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.rang = rang;
-    }
 
     public Long getId() {
         return id;
@@ -100,11 +90,11 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getRang() {
-        return rang;
+    public int getScore() {
+        return score;
     }
 
-    public void setRang(int rang) {
-        this.rang = rang;
+    public void setScore(int score) {
+        this.score = score;
     }
 }

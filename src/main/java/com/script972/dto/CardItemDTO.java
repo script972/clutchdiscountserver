@@ -1,7 +1,12 @@
 package com.script972.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.entity.CardGroup;
 import com.script972.entity.CardItem;
+import com.script972.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardItemDTO {
 
@@ -16,6 +21,7 @@ public class CardItemDTO {
      */
     private String number;
 
+    @JsonIgnore
     private CardGroup cardGroup;
 
 
@@ -29,6 +35,11 @@ public class CardItemDTO {
      */
     private String currency;
 
+    /**
+     * List of access user for this card
+     */
+    private List<UserDTO> accessUsers;
+
 
     public CardItemDTO() {
     }
@@ -40,7 +51,16 @@ public class CardItemDTO {
         this.number=entity.getNumber();
         this.cardGroup=entity.getCardGroup();
         this.discount=entity.getDiscount();
+        this.accessUsers=conveterDTOUser(entity.getAccessUsers());
         this.currency=entity.getCurrency();
+    }
+
+    private List<UserDTO> conveterDTOUser(List<User> accessUsers) {
+        List<UserDTO> users=new ArrayList<>();
+        for (int i = 0; i < accessUsers.size(); i++) {
+            users.add(new UserDTO(accessUsers.get(i)));
+        }
+        return users;
     }
 
     @Override
@@ -110,5 +130,13 @@ public class CardItemDTO {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public List<UserDTO> getAccessUsers() {
+        return accessUsers;
+    }
+
+    public void setAccessUsers(List<UserDTO> accessUsers) {
+        this.accessUsers = accessUsers;
     }
 }

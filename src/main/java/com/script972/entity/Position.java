@@ -69,4 +69,14 @@ public class Position {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id=" + id +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

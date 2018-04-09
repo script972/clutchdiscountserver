@@ -1,11 +1,14 @@
 package com.script972.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "Company")
 public class Company {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,57 +21,120 @@ public class Company {
     @JoinColumn(name = "position_id")
     private Position position;
 
+    /**
+     * Address of company office
+     */
     @Column(name = "address")
     private String address;
 
+    /**
+     * Rang of company  in top list
+     */
+    @Column(name = "scores")
+    private Integer score;
+
+    @Column(name = "available")
+    private Boolean available=true;
+
     @OneToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @JoinColumn(name = "added")
+    private User addedBy;
+
+    @OneToOne
+    @JoinColumn(name = "agree_by")
+    private User agreeBy;
+
+    @Column(name = "added_time")
+    private Timestamp addedTime;
 
     /**
-     * Для больших компаний возможность построение иерархии
+     * Just big compnay for build tree
      */
     @ManyToOne
     @JoinColumn(name = "company_parent")
     private Company parent;
 
     /**
-     * Логотип
+     * Photo logo
      */
-    @Lob
     @Column(name = "logo")
-    private byte[] imageBinary;
+    private String logo;
 
+    /**
+     * Company site
+     */
+    @Column(name = "web_site")
+    private String site;
+
+    /**
+     * Notice about company
+     */
+    @Column(name = "notice")
+    private String notice;
+
+
+    @OneToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+ /*   @OneToMany
+    @JoinColumn(name = "cardGroup")
+    private Collection<CardGroup> cardGroup;*/
 
     @OneToMany(mappedBy = "company")
-    private Collection<CardGroup> cardGroup;
+    private List<CardGroup> cardGroup;
+
+
+    @OneToMany
+    @JoinColumn(name = "phones")
+    private List<PhoneNumber> phones;
+
+
+    public Company(String title, Position position, String address, Integer score, Boolean available, User addedBy,
+                   User agreeBy, Timestamp addedTime, Company parent, String logo, String site, String notice, City city,
+                   List<CardGroup> cardGroup, List<PhoneNumber> phones) {
+        this.title = title;
+        this.position = position;
+        this.address = address;
+        this.score = score;
+        this.available = available;
+        this.addedBy = addedBy;
+        this.agreeBy = agreeBy;
+        this.addedTime = addedTime;
+        this.parent = parent;
+        this.logo = logo;
+        this.site = site;
+        this.notice = notice;
+        this.city = city;
+        this.cardGroup = cardGroup;
+        this.phones = phones;
+    }
 
     public Company() {
     }
 
-    public Company(String title, Position position, String address, City city, Company parent, byte[] imageBinary, Collection<CardGroup> cardGroup) {
-        this.title = title;
-        this.position = position;
-        this.address = address;
-        this.city = city;
-        this.parent = parent;
-        this.imageBinary = imageBinary;
-        this.cardGroup = cardGroup;
+
+    public List<PhoneNumber> getPhones() {
+        return phones;
     }
 
-    public byte[] getImageBinary() {
-        return imageBinary;
+    public void setPhones(List<PhoneNumber> phones) {
+        this.phones = phones;
     }
 
-    public void setImageBinary(byte[] imageBinary) {
-        this.imageBinary = imageBinary;
+    public String getLogo() {
+        return logo;
     }
 
-    public Collection<CardGroup> getCardGroup() {
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public List<CardGroup> getCardGroup() {
         return cardGroup;
     }
 
-    public void setCardGroup(Collection<CardGroup> cardGroup) {
+    public void setCardGroup(List<CardGroup> cardGroup) {
         this.cardGroup = cardGroup;
     }
 
@@ -112,6 +178,63 @@ public class Company {
         this.address = address;
     }
 
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public User getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(User addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public User getAgreeBy() {
+        return agreeBy;
+    }
+
+    public void setAgreeBy(User agreeBy) {
+        this.agreeBy = agreeBy;
+    }
+
+    public Timestamp getAddedTime() {
+        return addedTime;
+    }
+
+    public void setAddedTime(Timestamp addedTime) {
+        this.addedTime = addedTime;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
     public City getCity() {
         return city;
     }
@@ -119,4 +242,40 @@ public class Company {
     public void setCity(City city) {
         this.city = city;
     }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", position=" + position +
+                ", address='" + address + '\'' +
+                ", score=" + score +
+                ", available=" + available +
+                ", addedBy=" + addedBy +
+                ", agreeBy=" + agreeBy +
+                ", addedTime=" + addedTime +
+                ", parent=" + parent +
+                ", logo='" + logo + '\'' +
+                ", site='" + site + '\'' +
+                ", notice='" + notice + '\'' +
+                ", city=" + city +
+                ", phones=" + phones +
+                ", cardGroup=" + cardGroup +
+                '}';
+    }
+
+
 }

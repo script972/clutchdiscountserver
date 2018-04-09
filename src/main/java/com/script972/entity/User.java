@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "scores")
+    private int score;
+
     @OneToOne
     @JoinColumn(name = "city_id")
     private City city;
@@ -65,50 +68,25 @@ public class User implements UserDetails {
     @Column(name = "birthday")
     private Timestamp birthday;
 
-    @Column(name = "rang")
-    private int rang;
+    /**
+     * Item card in access
+     */
+    @ManyToMany(mappedBy = "accessUsers")
+    private Collection<CardItem> cardItems;
+
 
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
-                boolean enabled, Timestamp lastPasswordResetDate, List<Authority> authorities) {
+    public User(String username, String password, String firstName, String lastName, String email, int score, City city,
+                String phoneNumber, boolean enabled, Timestamp lastPasswordResetDate, List<Authority> authorities,
+                Collection<CardItem> cardItem, Timestamp birthday) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.enabled = enabled;
-        this.lastPasswordResetDate = lastPasswordResetDate;
-        this.authorities = authorities;
-    }
-
-    public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
-                boolean enabled, Timestamp lastPasswordResetDate, List<Authority> authorities, Collection<CardItem> cardItem,
-                Timestamp birthday, int rang) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.enabled = enabled;
-        this.lastPasswordResetDate = lastPasswordResetDate;
-        this.authorities = authorities;
-        this.cardItem = cardItem;
-        this.birthday = birthday;
-        this.rang = rang;
-    }
-
-    public User(String username, String password, String firstName, String lastName, String email, City city, String phoneNumber,
-                boolean enabled, Timestamp lastPasswordResetDate, List<Authority> authorities, Collection<CardItem> cardItem,
-                Timestamp birthday, int rang) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.score = score;
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.enabled = enabled;
@@ -116,7 +94,6 @@ public class User implements UserDetails {
         this.authorities = authorities;
         this.cardItem = cardItem;
         this.birthday = birthday;
-        this.rang = rang;
     }
 
     public Long getId() {
@@ -211,12 +188,12 @@ public class User implements UserDetails {
         this.birthday = birthday;
     }
 
-    public int getRang() {
-        return rang;
+    public int getScore() {
+        return score;
     }
 
-    public void setRang(int rang) {
-        this.rang = rang;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public City getCity() {
@@ -252,4 +229,14 @@ public class User implements UserDetails {
     public void setCardItem(Collection<CardItem> cardItem) {
         this.cardItem = cardItem;
     }
+
+
+    public Collection<CardItem> getCardItems() {
+        return cardItems;
+    }
+
+    public void setCardItems(Collection<CardItem> cardItems) {
+        this.cardItems = cardItems;
+    }
+
 }

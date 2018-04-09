@@ -1,6 +1,7 @@
 package com.script972.service;
 
 import com.script972.dto.CompanyDTO;
+import com.script972.entity.Company;
 
 import java.util.List;
 
@@ -14,4 +15,9 @@ public interface CompanyService {
 
     List<CompanyDTO> findAll();
 
+    Company addComapy(Company company);
+
+    void addLogoToCompany(String imageStr, String id);
+
+    List<CompanyDTO> filterByCountry(Long countryId);
 }

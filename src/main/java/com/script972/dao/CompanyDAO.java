@@ -1,5 +1,6 @@
 package com.script972.dao;
 
+import com.script972.dto.CompanyDTO;
 import com.script972.entity.CardItem;
 import com.script972.entity.Company;
 import com.script972.repository.CompanyRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -35,5 +37,41 @@ public class CompanyDAO implements CompanyRepository {
     @Override
     public List<Company> findAll() {
         return (List<Company>) entityManager.createQuery("from Company ").getResultList();
+    }
+
+    @Override
+    public Company addCompany(Company company) {
+        entityManager.persist(company);
+        return company;
+    }
+
+    @Override
+    public void addLogoToComapny(String imageStr, String id) {
+        String queryString = "update Company set logo = :nameLogo"+
+                " where id = :idCode";
+
+
+        int result = entityManager.createQuery(queryString)
+                .setParameter("nameLogo", imageStr)
+                .setParameter("idCode", id)
+                .executeUpdate();
+
+    }
+
+    @Override
+    public List<Company> filterByCountry(Long countryId) {
+         List resultList=entityManager.createNativeQuery("SELECT DISTINCT\n" +
+                "  company.* \n" +
+                "FROM\n" +
+                "  company\n" +
+                "WHERE\n" +
+                "  company.city_id in (SELECT id FROM city WHERE country_id in (SELECT id FROM country WHERE id = ?)) " +
+                         "AND company.available=TRUE ORDER BY company.scores",
+                 Company.class).setParameter(1, countryId).getResultList();
+         List<Company> result=new ArrayList<>();
+        for (int i = 0; i < resultList.size(); i++) {
+            result.add((Company)resultList.get(i));
+        }
+        return result;
     }
 }

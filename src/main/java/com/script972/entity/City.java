@@ -76,4 +76,15 @@ public class City {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", notice='" + notice + '\'' +
+                ", country=" + country +
+                ", position=" + position +
+                '}';
+    }
 }

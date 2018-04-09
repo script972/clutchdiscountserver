@@ -1,5 +1,6 @@
 package com.script972.service.impl;
 
+import com.script972.dto.CardItemPutDTO;
 import com.script972.entity.CardItem;
 import com.script972.dto.CardItemDTO;
 import com.script972.repository.CardRepository;
@@ -16,9 +17,13 @@ public class CardItemServiceImpl implements CardItemService {
     @Autowired
     private CardRepository repository;
 
+    @Autowired
+    private UserServiceImpl userRepository;
+
     @Override
-    public CardItem findById(Long id) {
-        return null;
+    public CardItemDTO findById(Long id) {
+        CardItem card = repository.findById(id);
+        return new CardItemDTO(card);
     }
 
     @Override
@@ -34,5 +39,22 @@ public class CardItemServiceImpl implements CardItemService {
             jto.add(new CardItemDTO(cardItems.get(i)));
         }
         return jto;
+    }
+
+    @Override
+    public void addItemCard(CardItemPutDTO itemCard) {
+        CardItem card=new CardItem(itemCard);
+        card.setAuther(userRepository.findById(itemCard.getAuther()));
+        repository.addItemCard(card);
+    }
+
+    @Override
+    public List<CardItemDTO> findByOwnerId(Long ownerid) {
+        List<CardItem> list=repository.findByOwner(userRepository.findById(ownerid));
+        List<CardItemDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CardItemDTO(list.get(i)));
+        }
+        return result;
     }
 }

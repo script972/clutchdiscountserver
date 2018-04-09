@@ -21,12 +21,12 @@ public class CardGroup {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "cardGroup")
     private Collection<CardItem> cardItems;
 
-    public CardGroup(String title, Collection<CardItem> cardItems) {
+    public CardGroup(String title, Company company, Collection<CardItem> cardItems) {
         this.title = title;
+        this.company = company;
         this.cardItems = cardItems;
     }
 
@@ -55,5 +55,13 @@ public class CardGroup {
 
     public void setCardItems(Collection<CardItem> cardItems) {
         this.cardItems = cardItems;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

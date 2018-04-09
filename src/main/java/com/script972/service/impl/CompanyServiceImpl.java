@@ -35,6 +35,27 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyDTO> findAll() {
         List<Company> list=repository.findAll();
+
+        List<CompanyDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CompanyDTO(list.get(i)));
+        }
+        return result;
+    }
+
+    @Override
+    public Company addComapy(Company company) {
+        return repository.addCompany(company);
+    }
+
+    @Override
+    public void addLogoToCompany(String imageStr, String id) {
+        repository.addLogoToComapny(imageStr, id);
+    }
+
+    @Override
+    public List<CompanyDTO> filterByCountry(Long countryId) {
+        List<Company> list = this.repository.filterByCountry(countryId);
         List<CompanyDTO> result=new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             result.add(new CompanyDTO(list.get(i)));

@@ -12,12 +12,12 @@ public class UploadPhotoUtils {
 
 
 
-    public void saveUploadedPhoto(MultipartFile file, TypePhotoPath dir) throws IOException {
+    public String saveUploadedPhoto(MultipartFile file, TypePhotoPath dir) throws IOException {
         byte [] bytes = file.getBytes();
-     //   Path path = Paths.get("UploadThis_"+file.getOriginalFilename());
-        //Path path = Paths.get(TypePhotoPath.dir(dir)+"/"+generatorStr());
-        Path path = Paths.get("/src/"+file.getOriginalFilename());
-        Files.write(path, bytes);
+        String type=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        Path path = Paths.get(TypePhotoPath.dir(dir)+"/"+generatorStr()+type);
+        path=Files.write(path, bytes);
+        return String.valueOf(path.getFileName());
     }
 
     private String generatorStr(){

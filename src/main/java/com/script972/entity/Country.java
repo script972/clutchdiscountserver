@@ -18,6 +18,12 @@ public class Country {
     @Column
     private String title;
 
+    /**
+     * Prefix of phone number
+     */
+    @Column(name = "code_number")
+    private String codeNumber;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Position position;
@@ -38,8 +44,9 @@ public class Country {
         this.citys = citys;
     }
 
-    public Country(String title, Position position, String notice, Collection<City> citys) {
+    public Country(String title, String codeNumber, Position position, String notice, Collection<City> citys) {
         this.title = title;
+        this.codeNumber = codeNumber;
         this.position = position;
         this.notice = notice;
         this.citys = citys;
@@ -78,5 +85,13 @@ public class Country {
 
     public void setNotice(String notice) {
         this.notice = notice;
+    }
+
+    public String getCodeNumber() {
+        return codeNumber;
+    }
+
+    public void setCodeNumber(String codeNumber) {
+        this.codeNumber = codeNumber;
     }
 }
