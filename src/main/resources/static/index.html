@@ -15,6 +15,7 @@
   <div class="container" ng-controller="NavigationCtrl" ng-cloak class="ng-cloak">
     <ul style="margin-bottom: 20px;" class="nav nav-pills" role="tablist">
         <li ng-class="tabClass('/')"><a href="#/" ng-click="setSelectedTab('/')">Home</a></li>
+        <li ng-class="tabClass('/admindashboard')"><a href="#/admindashboard" ng-click="setSelectedTab('/admindashboard')">Admin Dashboard</a></li>
         <li ng-class="tabClass('/login')" ng-hide="authenticated"><a href="#/login" ng-click="setSelectedTab('/login')">Login</a></li>
         <li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
     </ul>
@@ -28,6 +29,7 @@
   <script src="app.js"></script>
   <script src="dashboard/dashboard.js"></script>
   <script src="login/login.js"></script>
+  <script src="admindashboard/admindashboard.js"></script>
   <script src="services/auth.js"></script>
 </body>
 

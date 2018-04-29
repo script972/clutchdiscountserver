@@ -1,16 +1,17 @@
 package com.script972.dto;
 
 import com.script972.entity.City;
-import com.script972.entity.User;
 
 import java.util.Date;
 
 
-public class UserDTO {
+public class RegistrationUserDTO {
 
     private Long id;
 
     private String username;
+
+    private String password;
 
     private String firstName;
 
@@ -26,20 +27,22 @@ public class UserDTO {
 
     private String facePhoto;
 
-    private int score;
-
-    public UserDTO(User entity){
-        this.id=entity.getId();
-        this.username=entity.getUsername();
-        this.firstName=entity.getFirstName();
-        this.lastName=entity.getLastName();
-        this.email=entity.getEmail();
-        this.city=entity.getCity();
-        this.phoneNumber=entity.getPhoneNumber();
-        this.birthday=entity.getBirthday();
-        this.facePhoto=entity.getFacePhoto();
+    public RegistrationUserDTO() {
     }
 
+    public RegistrationUserDTO(Long id, String username, String password, String firstName, String lastName, String email,
+                               City city, String phoneNumber, Date birthday, String facePhoto) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.facePhoto = facePhoto;
+    }
 
     public Long getId() {
         return id;
@@ -55,6 +58,14 @@ public class UserDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -81,6 +92,7 @@ public class UserDTO {
         this.email = email;
     }
 
+
     public City getCity() {
         return city;
     }
@@ -97,14 +109,6 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public Date getBirthday() {
         return birthday;
     }
@@ -119,5 +123,19 @@ public class UserDTO {
 
     public void setFacePhoto(String facePhoto) {
         this.facePhoto = facePhoto;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationUserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", city=" + city +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

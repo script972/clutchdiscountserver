@@ -1,6 +1,7 @@
 package com.script972.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.script972.dto.RegistrationUserDTO;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 /**
  * Created by script972
@@ -42,6 +46,9 @@ public class User implements UserDetails {
     @Column(name = "scores")
     private int score;
 
+    @Column(name = "face_photo")
+    private String facePhoto;
+
     @OneToOne
     @JoinColumn(name = "city_id")
     private City city;
@@ -61,12 +68,13 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "auther")
     private Collection<CardItem> cardItem;
 
+    @Temporal(TIMESTAMP)
     @Column(name = "birthday")
-    private Timestamp birthday;
+    private Date birthday;
 
     /**
      * Item card in access
@@ -80,7 +88,7 @@ public class User implements UserDetails {
 
     public User(String username, String password, String firstName, String lastName, String email, int score, City city,
                 String phoneNumber, boolean enabled, Timestamp lastPasswordResetDate, List<Authority> authorities,
-                Collection<CardItem> cardItem, Timestamp birthday) {
+                Collection<CardItem> cardItem, Date birthday) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -94,6 +102,36 @@ public class User implements UserDetails {
         this.authorities = authorities;
         this.cardItem = cardItem;
         this.birthday = birthday;
+    }
+
+
+    public User(String username, String password, String firstName, String lastName, String email, int score,
+                String facePhoto, City city, String phoneNumber, boolean enabled, Timestamp lastPasswordResetDate,
+                List<Authority> authorities, Collection<CardItem> cardItem, Date birthday, Collection<CardItem> cardItems) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.score = score;
+        this.facePhoto = facePhoto;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+        this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.authorities = authorities;
+        this.cardItem = cardItem;
+        this.birthday = birthday;
+        this.cardItems = cardItems;
+    }
+
+    public User(RegistrationUserDTO registrationUserDTO) {
+        this.username=registrationUserDTO.getUsername();
+        this.password=registrationUserDTO.getPassword();
+        this.firstName=registrationUserDTO.getFirstName();
+        this.lastName=registrationUserDTO.getLastName();
+        this.email=registrationUserDTO.getEmail();
+        this.phoneNumber=registrationUserDTO.getPhoneNumber();
     }
 
     public Long getId() {
@@ -180,11 +218,11 @@ public class User implements UserDetails {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
-    public Timestamp getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Timestamp birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -239,4 +277,41 @@ public class User implements UserDetails {
         this.cardItems = cardItems;
     }
 
+    public String getFacePhoto() {
+        return facePhoto;
+    }
+
+    public void setFacePhoto(String facePhoto) {
+        this.facePhoto = facePhoto;
+    }
+
+    public void setRegistrationUser(RegistrationUserDTO registrationUser) {
+        this.birthday = registrationUser.getBirthday();
+        this.email=registrationUser.getEmail();
+        this.firstName=registrationUser.getFirstName();
+        this.lastName=registrationUser.getLastName();
+        this.city=registrationUser.getCity();
+        this.phoneNumber=registrationUser.getPhoneNumber();
+        this.facePhoto=registrationUser.getFacePhoto();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", score=" + score +
+                ", city=" + city +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", enabled=" + enabled +
+                ", lastPasswordResetDate=" + lastPasswordResetDate +
+                ", authorities=" + authorities +
+                ", birthday=" + birthday +
+
+                '}';
+    }
 }

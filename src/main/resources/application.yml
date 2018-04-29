@@ -3,8 +3,8 @@ app:
 
 jwt:
   header: Authorization
-  expires_in: 99999 # 5 minutes
-  mobile_expires_in: 99999 # 10 minutes
+  expires_in: 999999 # 5 minutes
+  mobile_expires_in: 999999 # 10 minutes
   secret: queenvictoria
 
 

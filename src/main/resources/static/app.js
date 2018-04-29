@@ -4,7 +4,8 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.dashboard',
   'myApp.login',
-  'myApp.services'
+  'myApp.services',
+    'myApp.admindashboard'
 ]).
 config(['$locationProvider', '$routeProvider', "$httpProvider", function($locationProvider, $routeProvider, $httpProvider) {
 	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

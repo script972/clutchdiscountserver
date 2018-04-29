@@ -9,7 +9,6 @@ import java.util.Collection;
 @Table(name = "country")
 public class Country {
 
-    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

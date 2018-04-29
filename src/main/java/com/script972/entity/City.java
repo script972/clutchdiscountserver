@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "city")
 public class City {
-    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +25,7 @@ public class City {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Position position;
+
 
     public City(String city, String notice, Country country, Position position) {
         this.city = city;
