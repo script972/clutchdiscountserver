@@ -15,7 +15,7 @@ public interface CompanyService {
 
     List<CompanyDTO> findAll();
 
-    Company addComapy(Company company);
+    CompanyDTO addComapy(Company company);
 
     void addLogoToCompany(String imageStr, String id);
 

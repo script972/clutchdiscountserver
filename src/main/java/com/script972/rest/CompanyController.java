@@ -24,26 +24,32 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
-@RequestMapping( value = "/api", produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping( value = "/api/company", produces = MediaType.APPLICATION_JSON_VALUE )
 public class CompanyController {
     @Autowired
     private CompanyService service;
 
 
-    @RequestMapping( method = GET, value= "/company/all")
+    @GetMapping
     @PreAuthorize("hasRole('USER')")
     public List<CompanyDTO> loadAll() {
         return this.service.findAll();
     }
 
-    @RequestMapping( method = GET, value= "/company/filtercountry/{countryId}")
+    @GetMapping("/{companyid}")
+    @PreAuthorize("hasRole('USER')")
+    public CompanyDTO getCompany(@PathVariable long companyid){
+        return this.service.findById(companyid);
+    }
+
+    @RequestMapping( method = GET, value= "/filtercountry/{countryId}")
     @PreAuthorize("hasRole('USER')")
     public List<CompanyDTO> filterByCountry(@PathVariable Long countryId) {
         return this.service.filterByCountry(countryId);
     }
 
 
-    @RequestMapping(method = POST, value = "/company/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException{
         UploadPhotoUtils upload=new UploadPhotoUtils();
@@ -51,8 +57,8 @@ public class CompanyController {
     }
 
 
-    @PostMapping("/company")
-    public Company addCompany(@RequestBody Company company){
+    @PostMapping
+    public CompanyDTO addCompany(@RequestBody Company company){
         return this.service.addComapy(company);
     }
 

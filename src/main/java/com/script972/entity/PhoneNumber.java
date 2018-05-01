@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "phone_number")
 public class PhoneNumber {
 
-    @JsonIgnore
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,8 @@ public class PhoneNumber {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    public PhoneNumber(String phoneNumber) {
+    public PhoneNumber(String name, String phoneNumber) {
+        this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
@@ -41,5 +41,13 @@ public class PhoneNumber {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

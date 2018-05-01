@@ -1,10 +1,7 @@
 package com.script972.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.script972.entity.CardGroup;
-import com.script972.entity.City;
-import com.script972.entity.Company;
-import com.script972.entity.Position;
+import com.script972.entity.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,9 +25,11 @@ public class CompanyDTO {
 
     private String notice;
 
-    private Integer scores;
+    private int scores;
 
-    private List<String> phones;
+    private String color;
+
+    private List<PhoneNumber> phones;
 
     /**
      * Just big compnay for build tree
@@ -48,20 +47,20 @@ public class CompanyDTO {
         this.logo=company.getLogo();
         this.site=company.getSite();
         this.city=company.getCity();
+        this.color=company.getColor();
+        if(company.getCardGroup()!=null)
         for (int i = 0; i < company.getCardGroup().size(); i++) {
             this.cardGroup.add(new CardGroupDTO(company.getCardGroup().get(i)));
 
         }
         this.notice=company.getNotice();
-        for (int i = 0; i < company.getPhones().size(); i++) {
-            this.phones.add(company.getPhones().get(i).getPhoneNumber());
-        }
+        this.phones=company.getPhones();
         this.scores=company.getScore();
 
     }
 
     public CompanyDTO(long id, String title, Position position, String address, String logo, String site, City city,
-                      String notice, Integer scores, List<String> phones, Company parent, List<CardGroupDTO> cardGroup) {
+                      String notice, int scores, List<PhoneNumber> phones, Company parent, List<CardGroupDTO> cardGroup) {
         this.id = id;
         this.title = title;
         this.position = position;
@@ -156,20 +155,28 @@ public class CompanyDTO {
         this.notice = notice;
     }
 
-    public List<String> getPhones() {
+    public List<PhoneNumber> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<String> phones) {
+    public void setPhones(List<PhoneNumber> phones) {
         this.phones = phones;
     }
 
-    public Integer getScores() {
+    public int getScores() {
         return scores;
     }
 
-    public void setScores(Integer scores) {
+    public void setScores(int scores) {
         this.scores = scores;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override

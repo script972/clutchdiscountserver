@@ -1,5 +1,7 @@
 package com.script972.entity;
 
+import com.script972.dto.CompanyDTO;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -17,7 +19,7 @@ public class Company {
     @Column(name = "title")
     private String title;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "position_id")
     private Position position;
 
@@ -31,7 +33,7 @@ public class Company {
      * Rang of company  in top list
      */
     @Column(name = "scores")
-    private Integer score;
+    private int score;
 
     @Column(name = "available")
     private Boolean available=true;
@@ -59,6 +61,12 @@ public class Company {
      */
     @Column(name = "logo")
     private String logo;
+
+    /**
+     * Color company
+     */
+    @Column(name = "color")
+    private String color;
 
     /**
      * Company site
@@ -90,9 +98,10 @@ public class Company {
     private List<PhoneNumber> phones;
 
 
-    public Company(String title, Position position, String address, Integer score, Boolean available, User addedBy,
-                   User agreeBy, Timestamp addedTime, Company parent, String logo, String site, String notice, City city,
-                   List<CardGroup> cardGroup, List<PhoneNumber> phones) {
+    public Company(String title, Position position, String address, int score, Boolean available,
+                   User addedBy, User agreeBy, Timestamp addedTime, Company parent, String logo,
+                   String color, String site, String notice, City city, List<CardGroup> cardGroup,
+                   List<PhoneNumber> phones) {
         this.title = title;
         this.position = position;
         this.address = address;
@@ -103,6 +112,7 @@ public class Company {
         this.addedTime = addedTime;
         this.parent = parent;
         this.logo = logo;
+        this.color = color;
         this.site = site;
         this.notice = notice;
         this.city = city;
@@ -112,6 +122,7 @@ public class Company {
 
     public Company() {
     }
+
 
 
     public List<PhoneNumber> getPhones() {
@@ -243,9 +254,6 @@ public class Company {
         this.city = city;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 
     public Boolean getAvailable() {
         return available;
@@ -253,6 +261,14 @@ public class Company {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override
@@ -269,13 +285,12 @@ public class Company {
                 ", addedTime=" + addedTime +
                 ", parent=" + parent +
                 ", logo='" + logo + '\'' +
+                ", color='" + color + '\'' +
                 ", site='" + site + '\'' +
                 ", notice='" + notice + '\'' +
                 ", city=" + city +
-                ", phones=" + phones +
                 ", cardGroup=" + cardGroup +
+                ", phones=" + phones +
                 '}';
     }
-
-
 }

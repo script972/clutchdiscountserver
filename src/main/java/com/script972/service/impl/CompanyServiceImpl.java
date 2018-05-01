@@ -2,9 +2,14 @@ package com.script972.service.impl;
 
 import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
+import com.script972.entity.User;
 import com.script972.repository.CompanyRepository;
 import com.script972.service.CompanyService;
+import com.script972.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,8 +49,25 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company addComapy(Company company) {
-        return repository.addCompany(company);
+    public CompanyDTO addComapy(Company company) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            User user=(User)authentication.getPrincipal();
+            // TODO может быть проблема
+            user.setCardItems(null);
+            // //TODO
+            company.setAddedBy(user);
+        }
+       /* System.out.println("<<<<<"+company.getPosition().getLat());
+        System.out.println("<<"+(positionService.getPosition(company.getPosition())));
+        if(positionService.getPosition(company.getPosition())==null){
+            positionService.addPosition(company.getPosition());
+            company.setPosition(positionService.getPosition(company.getPosition()));
+        }*/
+        repository.addCompany(company);
+        return this.findById(company.getId());
+
     }
 
     @Override
