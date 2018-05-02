@@ -10,4 +10,6 @@ public interface CountryService {
     List<Country> getCountryList();
 
     List<CountryWithCityListDTO> getCountryListWithCityList();
+
+    CountryWithCityListDTO addCountry(Country country);
 }

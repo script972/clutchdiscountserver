@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CityService {
     List<City> getCityList();
+
+    City addCity(City city);
 }

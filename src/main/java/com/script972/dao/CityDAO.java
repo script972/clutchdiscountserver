@@ -21,4 +21,21 @@ public class CityDAO implements CityRepository {
     public List<City> getAllCity() {
         return (List<City>) this.entityManager.createQuery("from City").getResultList();
     }
+
+    @Override
+    public City getById(long id) {
+        List<City> city=(List<City>)this.entityManager.createQuery("from City as ci where ci.id=:idParam")
+                .setParameter("idParam", id)
+                .getResultList();
+        if(city.size()>0) {
+            return city.get(0);
+        }
+        else
+            return null;
+    }
+
+    @Override
+    public void addCity(City city) {
+        this.entityManager.persist(city);
+    }
 }

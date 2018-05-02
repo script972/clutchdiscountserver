@@ -2,7 +2,6 @@ package com.script972.service.impl;
 
 import com.script972.dto.CountryWithCityListDTO;
 import com.script972.entity.Country;
-import com.script972.repository.CompanyRepository;
 import com.script972.repository.CountryRepository;
 import com.script972.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +29,20 @@ public class CountryServiceImpl implements CountryService {
             returnList.add(new CountryWithCityListDTO(list.get(i)));
         }
         return returnList;
+    }
+
+    @Override
+    public CountryWithCityListDTO addCountry(Country country) {
+        if(this.repository.findCountryByTitleCountry(country)!=null){
+            CountryWithCityListDTO error = new CountryWithCityListDTO();
+            error.setDescriptionError("Country with this title already consist");
+            return error;
+        }
+
+        return new CountryWithCityListDTO(
+                this.repository.addCountry(country));
+       /* return new CountryWithCityListDTO(
+                this.repository.getCountryById(country.getId()));*/
+
     }
 }

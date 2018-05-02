@@ -6,7 +6,7 @@ import com.script972.entity.Position;
 
 import java.util.*;
 
-public class CountryWithCityListDTO {
+public class CountryWithCityListDTO extends ErrorDTO {
 
     private long id;
 
@@ -23,6 +23,8 @@ public class CountryWithCityListDTO {
 
 
     private Collection<CityWithOutCountryDTO> citys;
+
+    private String error;
 
     public CountryWithCityListDTO() {
     }
@@ -44,12 +46,14 @@ public class CountryWithCityListDTO {
         this.notice=country.getNotice();
 
         Collection<City> cities=country.getCitys();
-        List<CityWithOutCountryDTO> resultList=new ArrayList<>();
-        Iterator<City> iterator=cities.iterator();
-        while (iterator.hasNext()){
-            resultList.add(new CityWithOutCountryDTO(iterator.next()));
+        if(cities!=null) {
+            List<CityWithOutCountryDTO> resultList = new ArrayList<>();
+            Iterator<City> iterator = cities.iterator();
+            while (iterator.hasNext()) {
+                resultList.add(new CityWithOutCountryDTO(iterator.next()));
+            }
+            this.citys = resultList;
         }
-        this.citys=resultList;
 
     }
 
@@ -100,5 +104,13 @@ public class CountryWithCityListDTO {
 
     public void setCitys(Collection<CityWithOutCountryDTO> citys) {
         this.citys = citys;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
     }
 }

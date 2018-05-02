@@ -8,5 +8,9 @@ public interface CountryRepository {
 
     List<Country> getListCountry();
 
+    Country addCountry(Country country);
 
+    Country getCountryById(long id);
+
+    Country findCountryByTitleCountry(Country country);
 }

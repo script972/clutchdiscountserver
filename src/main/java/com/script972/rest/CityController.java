@@ -6,9 +6,7 @@ import com.script972.service.CityService;
 import com.script972.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,12 @@ public class CityController {
     public List<City> getCityList(){
         return this.cityService.getCityList();
     }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public City addCity(@RequestBody City city){
+        return this.cityService.addCity(city);
+    }
+
 
 }
