@@ -18,7 +18,7 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping( value = "/api", produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping( value = "/api/card/")
 public class CardItemController {
 
     @Autowired
@@ -30,19 +30,19 @@ public class CardItemController {
         return this.service.findById( cardId );
     }*/
 
-    @RequestMapping( method = GET, value= "/card/all")
+    @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public List<CardItemDTO> loadAll() {
         return this.service.findAll();
     }
 
-    @GetMapping( value= "/card/{cardid}")
+    @GetMapping( value= "/{cardid}")
     @PreAuthorize("hasRole('ADMIN')")
     public CardItemDTO loadById(@PathVariable("cardid") Long cardid) {
         return this.service.findById(cardid);
     }
 
-    @GetMapping( value= "/card/mycard")
+    @GetMapping( value= "/mycard")
     @PreAuthorize("hasRole('USER')")
     public List<CardItemDTO> loadUserCard() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,7 +55,7 @@ public class CardItemController {
 
 
 
-    @PostMapping(value= "/card/")
+    @PostMapping
     @PreAuthorize("hasRole('USER')")
     public void addItemCard(@RequestBody CardItemPutDTO itemCard) {
         this.service.addItemCard(itemCard);

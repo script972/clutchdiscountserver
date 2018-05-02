@@ -84,4 +84,22 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return result;
     }
+
+    @Override
+    public List<CompanyDTO> filterByCity(Long cityId) {
+        List<Company> list = this.repository.filterByCity(cityId);
+        if(list==null){
+            CompanyDTO companyDTO=new CompanyDTO();
+            companyDTO.setCodeError(3);
+            companyDTO.setDescriptionError("Company not found");
+            List<CompanyDTO> result=new ArrayList<>();
+            result.add(companyDTO);
+            return result;
+        }
+        List<CompanyDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CompanyDTO(list.get(i)));
+        }
+        return result;
+    }
 }

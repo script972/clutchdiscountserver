@@ -48,6 +48,12 @@ public class CompanyController {
         return this.service.filterByCountry(countryId);
     }
 
+    @GetMapping("/filtercity/{cityId}")
+    @PreAuthorize("hasRole('USER')")
+    public List<CompanyDTO> filterByCity(@PathVariable Long cityId) {
+        return this.service.filterByCity(cityId);
+    }
+
 
     @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
     @PreAuthorize("hasRole('USER')")

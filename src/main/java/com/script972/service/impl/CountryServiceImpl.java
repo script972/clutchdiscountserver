@@ -17,6 +17,11 @@ public class CountryServiceImpl implements CountryService {
     private CountryRepository repository;
 
     @Override
+    public Country getCountryByID(long id) {
+        return repository.getCountryById(id);
+    }
+
+    @Override
     public List<Country> getCountryList() {
         return this.repository.getListCountry();
     }
@@ -35,6 +40,7 @@ public class CountryServiceImpl implements CountryService {
     public CountryWithCityListDTO addCountry(Country country) {
         if(this.repository.findCountryByTitleCountry(country)!=null){
             CountryWithCityListDTO error = new CountryWithCityListDTO();
+            error.setCodeError(1);
             error.setDescriptionError("Country with this title already consist");
             return error;
         }
@@ -45,4 +51,6 @@ public class CountryServiceImpl implements CountryService {
                 this.repository.getCountryById(country.getId()));*/
 
     }
+
+
 }

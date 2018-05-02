@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CompanyDTO {
+public class CompanyDTO  extends ErrorDTO{
 
     private long id;
 
@@ -38,6 +38,9 @@ public class CompanyDTO {
 
     @JsonIgnore
     private List<CardGroupDTO> cardGroup=new ArrayList<>();
+
+    public CompanyDTO() {
+    }
 
     public CompanyDTO(Company company) {
         this.id=company.getId();

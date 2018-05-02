@@ -74,4 +74,19 @@ public class CompanyDAO implements CompanyRepository {
         }
         return result;
     }
+
+    @Override
+    public List<Company> filterByCity(Long cityId) {
+        return (List<Company>) entityManager.createQuery("from Company as co where co.city.id = :paramCity")
+                .setParameter("paramCity", cityId)
+                .getResultList();
+      /*  return (List<Company>) entityManager.createNativeQuery("SELECT DISTINCT\n" +
+                        "  company.* \n" +
+                        "FROM\n" +
+                        "  company\n" +
+                        "WHERE\n" +
+                        "  company.city_id in (SELECT id FROM city WHERE country_id in (SELECT id FROM country WHERE id = ?)) " +
+                        "AND company.available=TRUE ORDER BY company.scores",
+                Company.class).setParameter(1, cityId).getResultList();*/
+    }
 }

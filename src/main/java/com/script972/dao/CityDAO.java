@@ -38,4 +38,16 @@ public class CityDAO implements CityRepository {
     public void addCity(City city) {
         this.entityManager.persist(city);
     }
+
+    @Override
+    public City getCityByTitle(String title) {
+        List<City> city=(List<City>)this.entityManager.createQuery("from City as ci where ci.city=:idParam")
+                .setParameter("idParam", title)
+                .getResultList();
+        if(city.size()>0) {
+            return city.get(0);
+        }
+        else
+            return null;
+    }
 }

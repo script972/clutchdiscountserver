@@ -24,7 +24,6 @@ public class CountryWithCityListDTO extends ErrorDTO {
 
     private Collection<CityWithOutCountryDTO> citys;
 
-    private String error;
 
     public CountryWithCityListDTO() {
     }
@@ -104,13 +103,5 @@ public class CountryWithCityListDTO extends ErrorDTO {
 
     public void setCitys(Collection<CityWithOutCountryDTO> citys) {
         this.citys = citys;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getError() {
-        return error;
     }
 }

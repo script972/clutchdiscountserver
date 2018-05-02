@@ -2,15 +2,18 @@ package com.script972.dto;
 
 public abstract class ErrorDTO {
 
-    private String codeError;
+    private int codeError;
 
     private String descriptionError;
 
-    public String getCodeError() {
+    public ErrorDTO() {
+    }
+
+    public int getCodeError() {
         return codeError;
     }
 
-    public void setCodeError(String codeError) {
+    public void setCodeError(int codeError) {
         this.codeError = codeError;
     }
 

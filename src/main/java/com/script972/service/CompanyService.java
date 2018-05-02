@@ -20,4 +20,7 @@ public interface CompanyService {
     void addLogoToCompany(String imageStr, String id);
 
     List<CompanyDTO> filterByCountry(Long countryId);
+
+    List<CompanyDTO> filterByCity(Long cityId);
+
 }

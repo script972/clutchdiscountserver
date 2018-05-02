@@ -3,9 +3,13 @@ package com.script972.service.impl;
 import com.script972.dto.CardItemPutDTO;
 import com.script972.entity.CardItem;
 import com.script972.dto.CardItemDTO;
+import com.script972.entity.User;
 import com.script972.repository.CardRepository;
 import com.script972.service.CardItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,8 +48,13 @@ public class CardItemServiceImpl implements CardItemService {
     @Override
     public void addItemCard(CardItemPutDTO itemCard) {
         CardItem card=new CardItem(itemCard);
-        card.setAuther(userRepository.findById(itemCard.getAuther()));
-        repository.addItemCard(card);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            User user=(User)authentication.getPrincipal();
+            card.setAuther(user);
+            this.repository.addItemCard(card);
+        }
     }
 
     @Override

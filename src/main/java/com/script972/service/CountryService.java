@@ -12,4 +12,6 @@ public interface CountryService {
     List<CountryWithCityListDTO> getCountryListWithCityList();
 
     CountryWithCityListDTO addCountry(Country country);
+
+    Country getCountryByID(long id);
 }
