@@ -73,6 +73,16 @@ public class CardItem {
     @JoinColumn(name = "card_group")
     private CardGroup cardGroup;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    @Column(name = "face_photo")
+    private String facePhoto;
+
+    @Column(name = "back_photo")
+    private String backPhoto;
+
     /**
      * List of access user for this card
      */
@@ -81,6 +91,14 @@ public class CardItem {
     private List<User> accessUsers;
 
     public CardItem() {
+    }
+
+    public CardItem(CardItemPutDTO itemCard) {
+        this.title=itemCard.getTitle();
+        this.number=itemCard.getNumber();
+        this.discount=itemCard.getDiscount();
+        this.currency=itemCard.getCurrency();
+        this.company=itemCard.getCompany();
     }
 
     public CardItem(String title, String number, int discount, String currency, String notice, Boolean available,
@@ -98,11 +116,23 @@ public class CardItem {
         this.accessUsers = accessUsers;
     }
 
-    public CardItem(CardItemPutDTO itemCard) {
-        this.title=itemCard.getTitle();
-        this.number=itemCard.getNumber();
-        this.discount=itemCard.getDiscount();
-        this.currency=itemCard.getCurrency();
+    public CardItem(String title, String number, int discount, String currency, String notice, Boolean available,
+                    Integer score, Timestamp dateAdded, User auther, CardGroup cardGroup, Company company, String facePhoto,
+                    String backPhoto, List<User> accessUsers) {
+        this.title = title;
+        this.number = number;
+        this.discount = discount;
+        this.currency = currency;
+        this.notice = notice;
+        this.available = available;
+        this.score = score;
+        this.dateAdded = dateAdded;
+        this.auther = auther;
+        this.cardGroup = cardGroup;
+        this.company = company;
+        this.facePhoto = facePhoto;
+        this.backPhoto = backPhoto;
+        this.accessUsers = accessUsers;
     }
 
     public long getId() {
@@ -207,6 +237,30 @@ public class CardItem {
 
     public void setDateAdded(Timestamp dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public String getFacePhoto() {
+        return facePhoto;
+    }
+
+    public void setFacePhoto(String facePhoto) {
+        this.facePhoto = facePhoto;
+    }
+
+    public String getBackPhoto() {
+        return backPhoto;
+    }
+
+    public void setBackPhoto(String backPhoto) {
+        this.backPhoto = backPhoto;
     }
 
     @Override

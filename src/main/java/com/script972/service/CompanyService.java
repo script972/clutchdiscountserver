@@ -23,4 +23,5 @@ public interface CompanyService {
 
     List<CompanyDTO> filterByCity(Long cityId);
 
+    byte [] getPhotoByLink(String namephoto);
 }

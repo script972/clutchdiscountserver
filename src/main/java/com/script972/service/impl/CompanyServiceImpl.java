@@ -7,11 +7,17 @@ import com.script972.repository.CompanyRepository;
 import com.script972.service.CompanyService;
 import com.script972.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,5 +107,18 @@ public class CompanyServiceImpl implements CompanyService {
             result.add(new CompanyDTO(list.get(i)));
         }
         return result;
+    }
+
+    @Override
+    public byte[] getPhotoByLink(String namephoto) {
+        System.out.println("IN");
+        Path path = Paths.get("src/main/resources/photos/companylogo/xjfcbwo5kihzya.png");
+        try {
+            byte[] data = Files.readAllBytes(path);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

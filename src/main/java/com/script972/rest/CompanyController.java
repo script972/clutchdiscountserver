@@ -6,8 +6,7 @@ import com.script972.enums.TypePhotoPath;
 import com.script972.service.CompanyService;
 import com.script972.utils.UploadPhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
-@RequestMapping( value = "/api/company", produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping( value = "/api/company" )
 public class CompanyController {
     @Autowired
     private CompanyService service;
@@ -66,6 +65,14 @@ public class CompanyController {
     @PostMapping
     public CompanyDTO addCompany(@RequestBody Company company){
         return this.service.addComapy(company);
+    }
+
+    @GetMapping("/getlogophoto/{namephoto}")
+    public ResponseEntity<byte[]> getPhoto(@PathVariable String namephoto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(this.service.getPhotoByLink(namephoto), headers, HttpStatus.OK);
+        return responseEntity;
     }
 
 

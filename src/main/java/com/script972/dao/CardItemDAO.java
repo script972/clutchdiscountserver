@@ -35,9 +35,14 @@ public class CardItemDAO implements CardRepository {
 
     @Override
     public CardItem findById(Long id) {
-        return (CardItem)entityManager.createQuery("from CardItem ca where ca.id=:paramOne order by ca.score desc")
+        List<CardItem> listDB=(List<CardItem>)entityManager.createQuery("from CardItem ca where ca.id=:paramOne order by ca.score desc")
                 .setParameter("paramOne", id)
-                .getResultList().get(0);
+                .getResultList();
+        if(listDB!=null && listDB.size()>0){
+            return listDB.get(0);
+        }
+        else
+            return null;
     }
 
     @Override

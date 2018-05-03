@@ -2,6 +2,9 @@ package com.script972.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.entity.CardGroup;
+import com.script972.entity.Company;
+
+import java.sql.Timestamp;
 
 /**
  * DTO for Add CardITEM
@@ -31,11 +34,16 @@ public class CardItemPutDTO {
      */
     private String currency;
 
+    private Timestamp dateAdded;
+
+    private Company company;
+
 
     public CardItemPutDTO() {
     }
 
-    public CardItemPutDTO(long id, String title, Long auther, String number, Long cardGroup, int discount, String currency) {
+    public CardItemPutDTO(long id, String title, Long auther, String number, Long cardGroup, int discount, String currency,
+                          Timestamp dateAdded, Company company) {
         this.id = id;
         this.title = title;
         this.auther = auther;
@@ -43,6 +51,8 @@ public class CardItemPutDTO {
         this.cardGroup = cardGroup;
         this.discount = discount;
         this.currency = currency;
+        this.dateAdded = dateAdded;
+        this.company = company;
     }
 
     public long getId() {
@@ -101,6 +111,21 @@ public class CardItemPutDTO {
         this.currency = currency;
     }
 
+    public Timestamp getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Timestamp dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     @Override
     public String toString() {

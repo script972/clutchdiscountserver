@@ -16,6 +16,7 @@ public class UploadPhotoUtils {
         byte [] bytes = file.getBytes();
         String type=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         Path path = Paths.get(TypePhotoPath.dir(dir)+"/"+generatorStr()+type);
+        System.out.println(path);
         path=Files.write(path, bytes);
         return String.valueOf(path.getFileName());
     }

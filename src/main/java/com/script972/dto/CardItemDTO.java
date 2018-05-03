@@ -3,12 +3,14 @@ package com.script972.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.entity.CardGroup;
 import com.script972.entity.CardItem;
+import com.script972.entity.Company;
 import com.script972.entity.User;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardItemDTO {
+public class CardItemDTO extends ErrorDTO {
 
     private long id;
 
@@ -40,6 +42,10 @@ public class CardItemDTO {
      */
     private List<UserDTO> accessUsers;
 
+    private CompanyDTO company;
+
+    private Timestamp dateAdded;
+
 
     public CardItemDTO() {
     }
@@ -51,8 +57,12 @@ public class CardItemDTO {
         this.number=entity.getNumber();
         this.cardGroup=entity.getCardGroup();
         this.discount=entity.getDiscount();
-        this.accessUsers=conveterDTOUser(entity.getAccessUsers());
+        if(entity.getAccessUsers()!=null)
+            this.accessUsers=conveterDTOUser(entity.getAccessUsers());
         this.currency=entity.getCurrency();
+        if(entity.getCompany()!=null)
+            this.company=new CompanyDTO(entity.getCompany());
+        this.dateAdded=entity.getDateAdded();
     }
 
     private List<UserDTO> conveterDTOUser(List<User> accessUsers) {
@@ -138,5 +148,21 @@ public class CardItemDTO {
 
     public void setAccessUsers(List<UserDTO> accessUsers) {
         this.accessUsers = accessUsers;
+    }
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
+    }
+
+    public Timestamp getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Timestamp dateAdded) {
+        this.dateAdded = dateAdded;
     }
 }
