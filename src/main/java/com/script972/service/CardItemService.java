@@ -22,4 +22,10 @@ public interface CardItemService {
     List<CardItemDTO> findMyCard();
 
     String uploadPhotoFront(MultipartFile file) throws IOException;
+
+    String uploadPhotoBack(MultipartFile file) throws IOException;
+
+    byte[] getFrontPhoto(String file) throws IOException;
+
+    byte[] getBackPhoto(String file) throws IOException;
 }

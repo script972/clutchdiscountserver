@@ -3,6 +3,7 @@ package com.script972.service;
 import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CompanyService {
@@ -23,5 +24,5 @@ public interface CompanyService {
 
     List<CompanyDTO> filterByCity(Long cityId);
 
-    byte [] getPhotoByLink(String namephoto);
+    byte [] getPhotoByLink(String namephoto) throws IOException;
 }

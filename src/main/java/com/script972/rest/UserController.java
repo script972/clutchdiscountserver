@@ -4,20 +4,23 @@ import com.script972.dto.CompanyDTO;
 import com.script972.dto.RegistrationUserDTO;
 import com.script972.dto.UserDTO;
 import com.script972.entity.User;
+import com.script972.enums.TypePhotoPath;
 import com.script972.service.UserService;
+import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by script972
@@ -89,6 +92,29 @@ public class UserController {
         return this.userService.getByPhoneNumber(phonenumber);
     }
 
+    @PostMapping("/uploadface")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity photoFront(@RequestParam("file") MultipartFile file){
+        try {
+            String str = this.userService.uploadPhotoFace(file);
+            return ResponseEntity.ok(str);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Photo face not upload");
+        }
+    }
+
+    @GetMapping("/facephoto/{namephoto}")
+    public ResponseEntity getPhotoFace(@PathVariable String namephoto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(this.userService.getFacePhoto(namephoto), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
+        }
+        return responseEntity;
+    }
 
 
 }

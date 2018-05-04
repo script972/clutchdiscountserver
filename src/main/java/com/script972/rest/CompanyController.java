@@ -4,30 +4,25 @@ import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
 import com.script972.enums.TypePhotoPath;
 import com.script972.service.CompanyService;
-import com.script972.utils.UploadPhotoUtils;
+import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOError;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
-@RequestMapping( value = "/api/company" )
+@RequestMapping( value = "/api/company")
 public class CompanyController {
+
     @Autowired
     private CompanyService service;
-
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -54,27 +49,30 @@ public class CompanyController {
     }
 
 
-    @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException{
-        UploadPhotoUtils upload=new UploadPhotoUtils();
-        return ResponseEntity.ok(upload.saveUploadedPhoto(file, TypePhotoPath.COMPANY_LOGO));
-    }
-
-
     @PostMapping
     public CompanyDTO addCompany(@RequestBody Company company){
         return this.service.addComapy(company);
     }
 
-    @GetMapping("/getlogophoto/{namephoto}")
-    public ResponseEntity<byte[]> getPhoto(@PathVariable String namephoto){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(this.service.getPhotoByLink(namephoto), headers, HttpStatus.OK);
-        return responseEntity;
+
+    @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException{
+        PhotoUtils upload=new PhotoUtils();
+        return ResponseEntity.ok(upload.saveUploadedPhoto(file, TypePhotoPath.COMPANY_LOGO));
     }
 
-
+    @GetMapping("/getlogophoto/{namephoto}")
+    public ResponseEntity getPhoto(@PathVariable String namephoto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(this.service.getPhotoByLink(namephoto), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
+        }
+        return responseEntity;
+    }
 
 }

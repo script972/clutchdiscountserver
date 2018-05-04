@@ -2,25 +2,18 @@ package com.script972.rest;
 
 import com.script972.dto.CardItemDTO;
 import com.script972.dto.CardItemPutDTO;
-import com.script972.entity.CardItem;
-import com.script972.entity.User;
 import com.script972.enums.TypePhotoPath;
 import com.script972.service.CardItemService;
-import com.script972.utils.UploadPhotoUtils;
+import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -46,7 +39,6 @@ public class CardItemController {
     @PreAuthorize("hasRole('USER')")
     public List<CardItemDTO> loadUserCard() {
         return this.service.findMyCard();
-
     }
 
     @PostMapping
@@ -55,13 +47,53 @@ public class CardItemController {
         return this.service.addItemCard(itemCard);
     }
 
-    @PostMapping("/frontPhoto")
+    @PostMapping("/frontphoto")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity photoFront(@RequestParam("file") MultipartFile file) throws IOException{
-        String str = this.service.uploadPhotoFront(file);
-        //UploadPhotoUtils upload=new UploadPhotoUtils();
-        return ResponseEntity.ok(str);
-
+    public ResponseEntity photoFront(@RequestParam("file") MultipartFile file){
+        try {
+            String str = this.service.uploadPhotoFront(file);
+            return ResponseEntity.ok(str);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Image front side not upload");
+        }
     }
+
+    @PostMapping("/backphoto")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity photoBack(@RequestParam("file") MultipartFile file){
+        try {
+            String str = this.service.uploadPhotoBack(file);
+            return ResponseEntity.ok(str);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Image back side not upload");
+        }
+    }
+
+    @GetMapping("/frontphoto/{namephoto}")
+    public ResponseEntity getPhotoFront(@PathVariable String namephoto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(this.service.getFrontPhoto(namephoto), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
+        }
+        return responseEntity;
+    }
+
+    @GetMapping("/backphoto/{namephoto}")
+    public ResponseEntity getPhotoBack(@PathVariable String namephoto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        ResponseEntity responseEntity;
+        try {
+            responseEntity = new ResponseEntity<>(this.service.getBackPhoto(namephoto), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
+        }
+        return responseEntity;
+    }
+
 
 }
