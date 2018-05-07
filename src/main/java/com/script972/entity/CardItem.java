@@ -1,6 +1,5 @@
 package com.script972.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.dto.CardItemPutDTO;
 import org.joda.time.DateTime;
 
