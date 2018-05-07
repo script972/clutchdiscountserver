@@ -14,13 +14,9 @@ spring:
       # possible values: validate | update | create | create-drop
       ddl-auto:  create-drop
 
-
   datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
-
-    #url: jdbc:mysql://localhost:3306/clutchdatabase?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
-    #username: root
-    #password: root
+    url: jdbc:mysql://clutch.cj4pukgs9dgp.eu-west-3.rds.amazonaws.com:3306/clutch
+    username: root
+    password: 12345678
     #password: 12345678910111213
+    driver-class-name: com.mysql.jdbc.Driver
