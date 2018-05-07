@@ -2,7 +2,6 @@ package com.script972.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.script972.dto.CardItemPutDTO;
-import javafx.scene.Parent;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;

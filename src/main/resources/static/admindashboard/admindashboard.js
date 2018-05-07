@@ -4,12 +4,12 @@ angular.module('myApp.admindashboard', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/admindashboard', {
             templateUrl: 'admindashboard/admindashboard.html',
-            controller: DashboardCtrl,
-            resolve: DashboardCtrl.resolve
+            controller: DashboardAdminCtrl,
+            resolve: DashboardAdminCtrl.resolve
         });
     }]);
 
-function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) {
+function DashboardAdminCtrl($scope, $rootScope, $http, isAuthenticated, authService) {
     $rootScope.authenticated = isAuthenticated;
 
     $scope.serverResponse = '';
@@ -23,7 +23,9 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
             $scope.responseBoxClass = 'alert-danger';
         }
         $scope.serverResponse = res;
-        $scope.serverResponse.data = JSON.stringify(res.data, null, 2);
+        $scope.users = JSON.stringify(res.data, null, 2);
+
+
     }
 
     if ($rootScope.authenticated) {
@@ -57,7 +59,7 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
             });
     }
 }
-DashboardCtrl.resolve = {
+DashboardAdminCtrl.resolve = {
     isAuthenticated : function($q, $http, AuthService) {
         var deferred = $q.defer();
         var oldToken = AuthService.getJwtToken();
@@ -82,5 +84,5 @@ DashboardCtrl.resolve = {
     }
 };
 
-DashboardCtrl.$inject = ['$scope', '$rootScope', '$http', 'isAuthenticated', 'AuthService'];
+DashboardAdminCtrl.$inject = ['$scope', '$rootScope', '$http', 'isAuthenticated', 'AuthService'];
 

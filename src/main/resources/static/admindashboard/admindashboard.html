@@ -4,15 +4,24 @@
     </div>
 </div>
 <div class="row">
-    <form role="form" ng-submit="login()" class="col-sm-6 col-lg-4">
-        <div class="form-group">
-            <label for="username">lol:</label>
-            <input type="text" placeholder="user/admin" class="form-control" id="username" name="username" ng-model="credentials.username"/>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" placeholder="123" class="form-control" id="password" name="password" ng-model="credentials.password"/>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+
+    <div ng-app="MyApp.admindashboard" ng-controller="DashboardAdminCtrl">
+        <input type="button" value="Generate Table" ng-click="GenerateTable()" />
+        <hr />
+        <table cellpadding="0" cellspacing="0" ng-show="IsVisible">
+            <tr>
+                <th>Customer Id</th>
+                <th>Name</th>
+                <th>Country</th>
+            </tr>
+            <tbody ng-repeat="m in Customers">
+            <tr>
+                <td>{{m.CustomerId}}</td>
+                <td>{{m.Name}}</td>
+                <td>{{m.Country}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
