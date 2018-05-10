@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="clutch@clutch.cj4pukgs9dgp.eu-west-3.rds.amazonaws.com" uuid="5d08384a-c09b-45f3-ac63-e009e8156e6d">
+    <data-source source="LOCAL" name="clutch@clutchinstance.c4hp6ljob9pu.us-east-2.rds.amazonaws.com" uuid="5d08384a-c09b-45f3-ac63-e009e8156e6d">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://clutch.cj4pukgs9dgp.eu-west-3.rds.amazonaws.com:3306/clutch</jdbc-url>
+      <jdbc-url>jdbc:mysql://clutchinstance.c4hp6ljob9pu.us-east-2.rds.amazonaws.com:3306/clutch</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
