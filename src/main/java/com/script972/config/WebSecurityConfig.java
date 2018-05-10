@@ -32,7 +32,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled=true,proxyTargetClass=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
