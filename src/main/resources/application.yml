@@ -12,11 +12,11 @@ spring:
   jpa:
     hibernate:
       # possible values: validate | update | create | create-drop
-      ddl-auto:  create-drop
+      ddl-auto:  create
 
   datasource:
-    url: jdbc:mysql://clutch.cj4pukgs9dgp.eu-west-3.rds.amazonaws.com:3306/clutch
-    username: root
-    password: 12345678
-    #password: 12345678910111213
-    driver-class-name: com.mysql.jdbc.Driver
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+
+
