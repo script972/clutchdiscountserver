@@ -50,12 +50,23 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
       url: 'api/user/all'
     })
 		.then(function(res) {
-			setResponse(res, true);
+            setResponse(res, true);
 		})
 		.catch(function(response) {
-			setResponse(response, false);
+            console.log("321");
+            setResponse(response, false);
 		});
 	}
+
+	$scope.getCustomInfo = function () {
+        $http({
+            headers: authService.createAuthorizationTokenHeader(),
+            method: 'GET',
+            url: 'api/user/1'
+        })
+			.then(function (value) { setResponse(value) })
+			.catch(function (reason) {  })
+    }
 }
 DashboardCtrl.resolve = {
 	isAuthenticated : function($q, $http, AuthService) {
