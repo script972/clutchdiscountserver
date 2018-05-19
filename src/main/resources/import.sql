@@ -9,49 +9,50 @@ INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authority (user_id, authority_id)   VALUES (2, 1);
 INSERT INTO user_authority (user_id, authority_id) VALUES (2, 2);
 
-INSERT INTO phone_number(phone_number) VALUE ('380936629623');
-INSERT INTO phone_number(phone_number) VALUE ('380936629634');
-INSERT INTO phone_number(phone_number) VALUE ('380936626243');
-INSERT INTO phone_number(phone_number) VALUE ('380936234624');
+INSERT INTO phone_number(id, phone_number) VALUES (1, '380936629623');
+INSERT INTO phone_number(id, phone_number) VALUES (2, '380936629634');
+INSERT INTO phone_number(id, phone_number) VALUES (3, '380936626243');
+INSERT INTO phone_number(id, phone_number) VALUES (4, '380936234624');
 
-INSERT INTO clutch.position(lat, lng) VALUES (46.973133, 31.993569);
-INSERT INTO clutch.position(lat, lng) VALUES (46.966402, 32.002077);
-INSERT INTO clutch.position(lat, lng) VALUES (49.435335, 31.309050);
-INSERT INTO clutch.position(lat, lng) VALUES (53.715932, 27.839150);
-INSERT INTO clutch.position(lat, lng) VALUES (47.181151, 28.893135);
-INSERT INTO clutch.position(lat, lng) VALUES (46.960240, 32.002600);
-INSERT INTO clutch.position(lat, lng) VALUES (53.893214, 27.548278);
-INSERT INTO clutch.position(lat, lng) VALUES (47.014670, 28.856699);
-INSERT INTO clutch.position(lat, lng) VALUES (46.475966, 30.706975);
-
-
-
-INSERT INTO country(title, position_id, code_number) VALUES ('Украина', 3, '+380')
-INSERT INTO country(title, position_id, code_number) VALUES ('Беларусь', 4, '+375')
-INSERT INTO country(title, position_id, code_number) VALUES ('Молдова', 5, '+373')
-
-
-INSERT INTO city(city,  country_id, position_id) VALUES ('Николаев', 1, 6);
-INSERT INTO city(city,  country_id, position_id) VALUES ('Минск', 2, 7);
-INSERT INTO city(city,  country_id, position_id) VALUES ('Кишенев', 3, 8);
-INSERT INTO city(city,  country_id, position_id) VALUES ('Одесса', 1, 9);
+INSERT INTO position(id, lat, lng) VALUES (1, 46.973133, 31.993569);
+INSERT INTO position(id, lat, lng) VALUES (2, 46.966402, 32.002077);
+INSERT INTO position(id, lat, lng) VALUES (3, 49.435335, 31.309050);
+INSERT INTO position(id, lat, lng) VALUES (4,53.715932, 27.839150);
+INSERT INTO position(id, lat, lng) VALUES (5, 47.181151, 28.893135);
+INSERT INTO position(id, lat, lng) VALUES (6, 46.960240, 32.002600);
+INSERT INTO position(id, lat, lng) VALUES (7,53.893214, 27.548278);
+INSERT INTO position(id, lat, lng) VALUES (8, 47.014670, 28.856699);
+INSERT INTO position(id, lat, lng) VALUES (9, 46.475966, 30.706975);
 
 
 
+INSERT INTO country(id, title, position_id, code_number) VALUES (1,'Украина', 3, '+380')
+INSERT INTO country(id, title, position_id, code_number) VALUES (2, 'Беларусь', 4, '+375')
+INSERT INTO country(id, title, position_id, code_number) VALUES (3, 'Молдова', 5, '+373')
 
-INSERT INTO company(title, position_id, city_id, logo, web_site, scores, available) VALUES ('ДП Адидас Украина', 1, 1, 'maxresdefault.jpg', 'https://www.adidas.net.ua/', 12, TRUE );
-INSERT INTO company(title, position_id, city_id, logo, web_site,scores, available) VALUES ('RodiMood', 2, 1, 'FIocltU.jpg', 'http://odessaua.com.ua/?70730', 17, TRUE );
 
-INSERT INTO card_group(title, company_id) VALUES ('Adidas', 1);
-INSERT INTO card_group(title) VALUES ('Madoc');
-INSERT INTO card_group(title) VALUES ('Colins');
-INSERT INTO card_group(title) VALUES ('Oodji');
-INSERT INTO card_group(title) VALUES ('EgoIst');
-INSERT INTO card_group (title, company_id) VALUES ('RodiMood', 2);
+INSERT INTO city(id, city,  country_id, position_id) VALUES (1, 'Николаев', 1, 6);
+INSERT INTO city(id, city,  country_id, position_id) VALUES (2, 'Минск', 2, 7);
+INSERT INTO city(id, city,  country_id, position_id) VALUES (3, 'Кишенев', 3, 8);
+INSERT INTO city(id, city,  country_id, position_id) VALUES (4, 'Одесса', 1, 9);
 
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount, available) VALUES ('0000721395', 'EgoIst', 1, 5, 'грн', 100, TRUE );
-INSERT INTO card_item(number_card, title, auther_id, card_group, currency, discount, available) VALUES ('367611', 'Adidas all in', 2, 1, '%', 3, TRUE );
-INSERT INTO card_item (number_card, title, auther_id, card_group, currency, discount, available) VALUES ('2000000003320', 'RodiMood', 1, 6, '%', 12, TRUE );
+
+
+
+INSERT INTO company(id, title, position_id, city_id, logo, web_site, scores, available) VALUES (1, 'ДП Адидас Украина', 1, 1, 'maxresdefault.jpg', 'https://www.adidas.net.ua/', 12, TRUE );
+INSERT INTO company(id, title, position_id, city_id, logo, web_site,scores, available) VALUES (2, 'RodiMood', 2, 1, 'FIocltU.jpg', 'http://odessaua.com.ua/?70730', 17, TRUE );
+
+INSERT INTO card_group(id, title, company_id) VALUES (1, 'Adidas', 1);
+INSERT INTO card_group(id, title) VALUES (3, 'Madoc');
+INSERT INTO card_group(id, title) VALUES (4, 'Colins');
+INSERT INTO card_group(id, title) VALUES (5, 'Oodji');
+INSERT INTO card_group(id, title) VALUES (6, 'EgoIst');
+INSERT INTO card_group (id, title, company_id) VALUES (7, 'RodiMood', 2);
+
+
+INSERT INTO card_item(id, number_card, title, auther_id, card_group, currency, discount, available) VALUES (1, '0000721395', 'EgoIst', 1, 5, 'грн', 100, TRUE );
+INSERT INTO card_item(id, number_card, title, auther_id, card_group, currency, discount, available) VALUES (2, '367611', 'Adidas all in', 2, 1, '%', 3, TRUE );
+INSERT INTO card_item (id, number_card, title, auther_id, card_group, currency, discount, available) VALUES (3, '2000000003320', 'RodiMood', 1, 5, '%', 12, TRUE );
 
 
 

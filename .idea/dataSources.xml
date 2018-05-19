@@ -16,5 +16,30 @@
         <property name="createDatabaseIfNotExist" value="true" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="ddnmrod5huuo6h@ec2-54-195-246-59.eu-west-1.compute.amazonaws.com" uuid="2aa2cccc-0bf1-4f5e-a0d9-54ca928ac43c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-54-195-246-59.eu-west-1.compute.amazonaws.com:5432/ddnmrod5huuo6h</jdbc-url>
+      <driver-properties>
+        <property name="ssl" value="true" />
+        <property name="sslfactory" value="org.postgresql.ssl.NonValidatingFactory" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="@localhost [2]" uuid="8c4d5404-5445-4d69-82a1-67b9034a6ead">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <driver-properties>
+        <property name="autoReconnect" value="true" />
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
+        <property name="createDatabaseIfNotExist" value="true" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>
