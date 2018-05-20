@@ -7,3 +7,10 @@ https://docs.google.com/document/d/1Qvrx7XgOjs2IEy79VO3vg1A5nvJuQSp0zmYcyU9hNHg/
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+
+     datasource:
+        url: jdbc:mysql://localhost:3306/clutchdatabase?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
+        username: root
+        #password: root
+        password: 12345678910111213
+        driver-class-name: com.mysql.jdbc.Driver
