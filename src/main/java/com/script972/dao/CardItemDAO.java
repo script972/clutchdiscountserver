@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 @Transactional
 @Repository
 public class CardItemDAO implements CardRepository {
