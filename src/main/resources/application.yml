@@ -12,11 +12,11 @@ spring:
   jpa:
     hibernate:
       # possible values: validate | update | create | create-drop
-      ddl-auto:  create
+      ddl-auto:  create-drop
 
-   datasource:
-       url: ${JDBC_DATABASE_URL}
-       username: ${JDBC_DATABASE_USERNAME}
-       password: ${JDBC_DATABASE_PASSWORD}
+  datasource:
+      url: ${JDBC_DATABASE_URL}
+      username: ${JDBC_DATABASE_USERNAME}
+      password: ${JDBC_DATABASE_PASSWORD}
 
 
