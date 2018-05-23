@@ -6,6 +6,7 @@ import com.script972.entity.CardItem;
 import com.script972.entity.Company;
 import com.script972.entity.User;
 
+import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,10 @@ public class CardItemDTO extends ErrorDTO {
 
     private Timestamp dateAdded;
 
+    private String facePhoto;
+
+    private String backPhoto;
+
 
     public CardItemDTO() {
     }
@@ -63,6 +68,8 @@ public class CardItemDTO extends ErrorDTO {
         if(entity.getCompany()!=null)
             this.company=new CompanyDTO(entity.getCompany());
         this.dateAdded=entity.getDateAdded();
+        this.facePhoto=entity.getFacePhoto();
+        this.backPhoto=entity.getBackPhoto();
     }
 
     private List<UserDTO> conveterDTOUser(List<User> accessUsers) {
@@ -164,5 +171,21 @@ public class CardItemDTO extends ErrorDTO {
 
     public void setDateAdded(Timestamp dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public String getFacePhoto() {
+        return facePhoto;
+    }
+
+    public void setFacePhoto(String facePhoto) {
+        this.facePhoto = facePhoto;
+    }
+
+    public String getBackPhoto() {
+        return backPhoto;
+    }
+
+    public void setBackPhoto(String backPhoto) {
+        this.backPhoto = backPhoto;
     }
 }
