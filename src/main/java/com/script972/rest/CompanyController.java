@@ -1,10 +1,10 @@
 package com.script972.rest;
 
+import com.script972.components.CloudStorageHepler;
 import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
 import com.script972.enums.TypePhotoPath;
 import com.script972.service.CompanyService;
-import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +23,9 @@ public class CompanyController {
 
     @Autowired
     private CompanyService service;
+
+    @Autowired
+    private CloudStorageHepler cloudStorageHelper;
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
@@ -58,21 +61,9 @@ public class CompanyController {
     @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException{
-        PhotoUtils upload=new PhotoUtils();
-        return ResponseEntity.ok(upload.saveUploadedPhoto(file, TypePhotoPath.COMPANY_LOGO));
+        String url = cloudStorageHelper.uploadFile(file, TypePhotoPath.COMPANY_LOGO);
+        return ResponseEntity.ok(url);
     }
 
-    @GetMapping("/getlogophoto/{namephoto}")
-    public ResponseEntity getPhoto(@PathVariable String namephoto){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        ResponseEntity responseEntity;
-        try {
-            responseEntity = new ResponseEntity<>(this.service.getPhotoByLink(namephoto), headers, HttpStatus.OK);
-        } catch (IOException e) {
-            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
-        }
-        return responseEntity;
-    }
 
 }

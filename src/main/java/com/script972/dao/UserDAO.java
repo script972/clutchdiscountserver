@@ -1,11 +1,7 @@
 package com.script972.dao;
 
-import com.script972.dto.RegistrationUserDTO;
-import com.script972.dto.UserDTO;
-import com.script972.entity.CardItem;
 import com.script972.entity.User;
 import com.script972.repository.UserRRepository;
-import com.script972.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,5 +33,12 @@ public class UserDAO implements UserRRepository {
             return userList.get(0);
         }
         return null;
+    }
+
+    @Override
+    public boolean addPhotoAvatar(Long id, String url) {
+        String hqlQuery = "update User set face_photo = :facePhoto where id=:userId";
+        int result = this.entityManager.createQuery(hqlQuery).setParameter("facePhoto", url).setParameter("userId", id).executeUpdate();
+        return result != 0;
     }
 }

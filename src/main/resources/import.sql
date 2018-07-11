@@ -26,9 +26,9 @@ INSERT INTO position(id, lat, lng) VALUES (9, 46.475966, 30.706975);
 
 
 
-INSERT INTO country(id, title, position_id, code_number) VALUES (1,'Украина', 3, '+380')
-INSERT INTO country(id, title, position_id, code_number) VALUES (2, 'Беларусь', 4, '+375')
-INSERT INTO country(id, title, position_id, code_number) VALUES (3, 'Молдова', 5, '+373')
+INSERT INTO country(id, title, position_id, code_number) VALUES (1,'Украина', 3, '+380');
+INSERT INTO country(id, title, position_id, code_number) VALUES (2, 'Беларусь', 4, '+375');
+INSERT INTO country(id, title, position_id, code_number) VALUES (3, 'Молдова', 5, '+373');
 
 
 INSERT INTO city(id, city,  country_id, position_id) VALUES (1, 'Николаев', 1, 6);

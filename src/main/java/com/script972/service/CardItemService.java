@@ -25,7 +25,4 @@ public interface CardItemService {
 
     String uploadPhotoBack(MultipartFile file) throws IOException;
 
-    byte[] getFrontPhoto(String file) throws IOException;
-
-    byte[] getBackPhoto(String file) throws IOException;
 }

@@ -12,13 +12,19 @@ spring:
   jpa:
     hibernate:
       # possible values: validate | update | create | create-drop
-      ddl-auto:  create-drop
+      ddl-auto:  validate
 
   datasource:
           url: jdbc:mysql://localhost:3306/clutchdatabase?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
-          username: root
+          username: clutchuser
           #password: root
           password: 12345678910111213
           driver-class-name: com.mysql.jdbc.Driver
+
+
+aws:
+  s3:
+    privateKey: "WdeG8QUKS0kw0/MbSCfXMHmBmsv0i70kqcG8y2ce"
+    publicKey: "AKIAIIZWKVFZ6P56EBGA"
 
 

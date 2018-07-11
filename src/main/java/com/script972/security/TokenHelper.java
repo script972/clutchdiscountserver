@@ -1,6 +1,6 @@
 package com.script972.security;
 
-import com.script972.utils.TimeProvider;
+import com.script972.components.TimeProvider;
 import com.script972.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -6,7 +6,6 @@ import com.script972.entity.User;
 import com.script972.enums.TypePhotoPath;
 import com.script972.repository.CompanyRepository;
 import com.script972.service.CompanyService;
-import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,9 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,9 +104,5 @@ public class CompanyServiceImpl implements CompanyService {
         return result;
     }
 
-    @Override
-    public byte[] getPhotoByLink(String namephoto) throws IOException {
-        PhotoUtils photoUtils=new PhotoUtils();
-        return photoUtils.downloadPhoto(namephoto, TypePhotoPath.COMPANY_LOGO);
-    }
+
 }

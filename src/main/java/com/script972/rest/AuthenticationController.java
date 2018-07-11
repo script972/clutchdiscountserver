@@ -1,6 +1,6 @@
 package com.script972.rest;
 
-import com.script972.utils.DeviceProvider;
+import com.script972.components.DeviceProvider;
 import com.script972.entity.User;
 import com.script972.entity.UserTokenState;
 import com.script972.security.TokenHelper;
@@ -84,6 +84,7 @@ public class AuthenticationController {
         String authToken = tokenHelper.getToken( request );
 
         Device device = deviceProvider.getCurrentDevice(request);
+
 
         if (authToken != null && principal != null) {
 

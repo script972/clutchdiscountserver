@@ -1,5 +1,6 @@
 package com.script972.service.impl;
 
+import com.script972.components.CloudStorageHepler;
 import com.script972.dto.CardItemPutDTO;
 import com.script972.entity.CardItem;
 import com.script972.dto.CardItemDTO;
@@ -7,7 +8,6 @@ import com.script972.entity.User;
 import com.script972.enums.TypePhotoPath;
 import com.script972.repository.CardRepository;
 import com.script972.service.CardItemService;
-import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +27,9 @@ public class CardItemServiceImpl implements CardItemService {
 
     @Autowired
     private UserServiceImpl userRepository;
+
+    @Autowired
+    private CloudStorageHepler cloudStorageHelper;
 
     @Override
     public CardItemDTO findById(Long id) {
@@ -109,7 +112,7 @@ public class CardItemServiceImpl implements CardItemService {
                 result.add(cardError);
                 return result;
             }else{
-                for (int i = 0; i < cards.size(); i++) {
+                for (int i = 0; cards.size() < i; i++) {
                     result.add(new CardItemDTO(cards.get(i)));
                     return result;
                 }
@@ -123,27 +126,14 @@ public class CardItemServiceImpl implements CardItemService {
 
     @Override
     public String uploadPhotoFront(MultipartFile file) throws IOException {
-        PhotoUtils upload=new PhotoUtils();
-        return upload.saveUploadedPhoto(file, TypePhotoPath.CARD_PHOTO_FRONT);
+        return cloudStorageHelper.uploadFile(file, TypePhotoPath.CARD_PHOTO_FRONT);
     }
 
     @Override
     public String uploadPhotoBack(MultipartFile file) throws IOException {
-        PhotoUtils upload=new PhotoUtils();
-        return upload.saveUploadedPhoto(file, TypePhotoPath.CARD_PHOTO_BACK);
+        return cloudStorageHelper.uploadFile(file, TypePhotoPath.CARD_PHOTO_BACK);
     }
 
-    @Override
-    public byte[] getFrontPhoto(String file) throws IOException {
-        PhotoUtils upload=new PhotoUtils();
-        return upload.downloadPhoto(file, TypePhotoPath.CARD_PHOTO_FRONT);
-    }
-
-    @Override
-    public byte[] getBackPhoto(String file) throws IOException {
-        PhotoUtils upload=new PhotoUtils();
-        return upload.downloadPhoto(file, TypePhotoPath.CARD_PHOTO_BACK);
-    }
 
 
 }

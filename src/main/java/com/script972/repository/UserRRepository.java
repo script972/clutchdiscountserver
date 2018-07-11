@@ -11,4 +11,6 @@ public interface UserRRepository {
     void updateUserName(User user);
 
     User getPhoneNumber(String number);
+
+    boolean addPhotoAvatar(Long id, String url);
 }

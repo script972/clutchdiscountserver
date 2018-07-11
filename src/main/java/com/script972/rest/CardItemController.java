@@ -2,9 +2,7 @@ package com.script972.rest;
 
 import com.script972.dto.CardItemDTO;
 import com.script972.dto.CardItemPutDTO;
-import com.script972.enums.TypePhotoPath;
 import com.script972.service.CardItemService;
-import com.script972.utils.PhotoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping( value = "/api/card")
@@ -68,32 +64,5 @@ public class CardItemController {
             return ResponseEntity.badRequest().body("Image back side not upload");
         }
     }
-
-    @GetMapping("/frontphoto/{namephoto}")
-    public ResponseEntity getPhotoFront(@PathVariable String namephoto){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        ResponseEntity responseEntity;
-        try {
-            responseEntity = new ResponseEntity<>(this.service.getFrontPhoto(namephoto), headers, HttpStatus.OK);
-        } catch (IOException e) {
-            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
-        }
-        return responseEntity;
-    }
-
-    @GetMapping("/backphoto/{namephoto}")
-    public ResponseEntity getPhotoBack(@PathVariable String namephoto){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        ResponseEntity responseEntity;
-        try {
-            responseEntity = new ResponseEntity<>(this.service.getBackPhoto(namephoto), headers, HttpStatus.OK);
-        } catch (IOException e) {
-            responseEntity = new ResponseEntity<>("Current image not found", headers, HttpStatus.NO_CONTENT);
-        }
-        return responseEntity;
-    }
-
 
 }

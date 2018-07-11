@@ -1,4 +1,4 @@
-package com.script972.utils;
+package com.script972.components;
 
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;

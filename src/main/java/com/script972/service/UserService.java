@@ -26,5 +26,4 @@ public interface UserService {
 
     String uploadPhotoFace(MultipartFile file) throws IOException;
 
-    byte[] getFacePhoto(String namephoto) throws IOException;
 }
