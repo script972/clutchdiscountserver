@@ -13,4 +13,19 @@ https://docs.google.com/document/d/1Qvrx7XgOjs2IEy79VO3vg1A5nvJuQSp0zmYcyU9hNHg/
         username: root
         #password: root
         password: 12345678910111213
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.jdbc.Driver,
+
+
+
+
+
+
+
+
+
+        datasource:
+                  url: jdbc:mysql://localhost:3306/clutchdatabase?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
+                  username: clutchuser
+                  #password: root
+                  password: 12345678910111213
+                  driver-class-name: com.mysql.jdbc.Driver

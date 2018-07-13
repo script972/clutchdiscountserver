@@ -52,6 +52,7 @@ public class CardItemServiceImpl implements CardItemService {
     @Override
     public List<CardItemDTO> findAll() {
         List<CardItem> cardItems = this.repository.findAll();
+
         List<CardItemDTO> jto=new ArrayList<>();
         for (int i = 0; i < cardItems.size(); i++) {
             jto.add(new CardItemDTO(cardItems.get(i)));
