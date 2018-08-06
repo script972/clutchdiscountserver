@@ -34,6 +34,11 @@ public class CardItemPutDTO {
      */
     private String currency;
 
+
+    private String facePhoto;
+
+    private String backPhoto;
+
     private Timestamp dateAdded;
 
     private Company company;
@@ -127,16 +132,36 @@ public class CardItemPutDTO {
         this.company = company;
     }
 
+    public String getFacePhoto() {
+        return facePhoto;
+    }
+
+    public void setFacePhoto(String facePhoto) {
+        this.facePhoto = facePhoto;
+    }
+
+    public String getBackPhoto() {
+        return backPhoto;
+    }
+
+    public void setBackPhoto(String backPhoto) {
+        this.backPhoto = backPhoto;
+    }
+
     @Override
     public String toString() {
         return "CardItemPutDTO{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", autherId=" + auther +
+                ", auther=" + auther +
                 ", number='" + number + '\'' +
                 ", cardGroup=" + cardGroup +
                 ", discount=" + discount +
                 ", currency='" + currency + '\'' +
+                ", facePhoto='" + facePhoto + '\'' +
+                ", backPhoto='" + backPhoto + '\'' +
+                ", dateAdded=" + dateAdded +
+                ", company=" + company +
                 '}';
     }
 }

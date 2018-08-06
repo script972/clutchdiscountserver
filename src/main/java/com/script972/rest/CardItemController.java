@@ -40,6 +40,7 @@ public class CardItemController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public CardItemDTO addItemCard(@RequestBody CardItemPutDTO itemCard) {
+        System.out.println(itemCard.getFacePhoto());
         return this.service.addItemCard(itemCard);
     }
 

@@ -31,6 +31,8 @@ public class CardItemDAO implements CardRepository {
 
     @Override
     public void addItemCard(CardItem card) {
+        System.out.println(card.getFacePhoto());
+        System.out.println(card);
         entityManager.persist(card);
     }
 

@@ -1,5 +1,6 @@
 package com.script972.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.script972.dto.CardItemPutDTO;
 import org.joda.time.DateTime;
 
@@ -96,6 +97,8 @@ public class CardItem {
         this.discount=itemCard.getDiscount();
         this.currency=itemCard.getCurrency();
         this.company=itemCard.getCompany();
+        this.facePhoto = itemCard.getFacePhoto();
+        this.backPhoto =itemCard.getBackPhoto();
     }
 
     public CardItem(String title, String number, int discount, String currency, String notice, Boolean available,
