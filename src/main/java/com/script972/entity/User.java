@@ -49,6 +49,9 @@ public class User implements UserDetails {
     @Column(name = "face_photo")
     private String facePhoto;
 
+    @Column(name = "google_plus")
+    private Boolean googlePlus;
+
     @OneToOne
     @JoinColumn(name = "city_id")
     private City city;
@@ -57,7 +60,7 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @Column(name = "enabled")
-    private boolean enabled;
+    private boolean enabled=true;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -132,6 +135,7 @@ public class User implements UserDetails {
         this.lastName=registrationUserDTO.getLastName();
         this.email=registrationUserDTO.getEmail();
         this.phoneNumber=registrationUserDTO.getPhoneNumber();
+        this.googlePlus=true;
     }
 
     public Long getId() {
@@ -285,6 +289,14 @@ public class User implements UserDetails {
         this.facePhoto = facePhoto;
     }
 
+    public Boolean getGooglePlus() {
+        return googlePlus;
+    }
+
+    public void setGooglePlus(Boolean googlePlus) {
+        this.googlePlus = googlePlus;
+    }
+
     public void setRegistrationUser(RegistrationUserDTO registrationUser) {
         this.birthday = registrationUser.getBirthday();
         this.email=registrationUser.getEmail();
@@ -305,13 +317,16 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", score=" + score +
+                ", facePhoto='" + facePhoto + '\'' +
+                ", googlePlus=" + googlePlus +
                 ", city=" + city +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", enabled=" + enabled +
                 ", lastPasswordResetDate=" + lastPasswordResetDate +
                 ", authorities=" + authorities +
+                ", cardItem=" + cardItem +
                 ", birthday=" + birthday +
-
+                ", cardItems=" + cardItems +
                 '}';
     }
 }

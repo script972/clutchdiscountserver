@@ -15,11 +15,10 @@ spring:
       ddl-auto:  validate
 
   datasource:
-      url: jdbc:mysql://localhost:3306/clutchdatabase?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8
-      username: clutchuser
-      #password: root
-      password: 12345678910111213
-      driver-class-name: com.mysql.jdbc.Driver
+           url: jdbc:mysql://sql7.freesqldatabase.com:3306/sql7247283
+           username: sql7247283
+           password: YPwqSp4abz
+           driver-class-name: com.mysql.cj.jdbc.Driver
 
 
 aws:

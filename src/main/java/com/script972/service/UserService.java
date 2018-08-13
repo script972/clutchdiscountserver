@@ -1,8 +1,11 @@
 package com.script972.service;
 
 import com.script972.dto.RegistrationUserDTO;
+import com.script972.dto.TokenDTO;
 import com.script972.dto.UserDTO;
 import com.script972.entity.User;
+import com.script972.entity.UserTokenState;
+import org.springframework.mobile.device.Device;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,4 +29,5 @@ public interface UserService {
 
     String uploadPhotoFace(MultipartFile file) throws IOException;
 
+    UserTokenState registrationViaGoogle(TokenDTO token, Device device);
 }

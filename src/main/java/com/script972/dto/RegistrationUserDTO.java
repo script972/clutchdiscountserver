@@ -27,6 +27,8 @@ public class RegistrationUserDTO {
 
     private String facePhoto;
 
+    private Boolean googlePlus;
+
     public RegistrationUserDTO() {
     }
 
@@ -42,6 +44,15 @@ public class RegistrationUserDTO {
         this.phoneNumber = phoneNumber;
         this.birthday = birthday;
         this.facePhoto = facePhoto;
+    }
+
+    public RegistrationUserDTO(GoogleOathDTO googleOathDTO) {
+        this.setEmail(googleOathDTO.getEmail());
+        this.setUsername(googleOathDTO.getEmail());
+        this.setFirstName(googleOathDTO.getGivenName());
+        this.setLastName(googleOathDTO.getFamilyName());
+        this.setFacePhoto(googleOathDTO.getPicture());
+
     }
 
     public Long getId() {
@@ -123,6 +134,14 @@ public class RegistrationUserDTO {
 
     public void setFacePhoto(String facePhoto) {
         this.facePhoto = facePhoto;
+    }
+
+    public Boolean getGooglePlus() {
+        return googlePlus;
+    }
+
+    public void setGooglePlus(Boolean googlePlus) {
+        this.googlePlus = googlePlus;
     }
 
     @Override

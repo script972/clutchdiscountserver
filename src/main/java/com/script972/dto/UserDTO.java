@@ -6,7 +6,7 @@ import com.script972.entity.User;
 import java.util.Date;
 
 
-public class UserDTO {
+public class UserDTO extends ErrorDTO{
 
     private Long id;
 
@@ -38,6 +38,10 @@ public class UserDTO {
         this.phoneNumber=entity.getPhoneNumber();
         this.birthday=entity.getBirthday();
         this.facePhoto=entity.getFacePhoto();
+    }
+
+    public UserDTO() {
+
     }
 
 

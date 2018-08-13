@@ -50,6 +50,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public List<CompanyDTO> findAllForCardList() {
+        List<Company> list=repository.findAllForCardList();
+
+        List<CompanyDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CompanyDTO(list.get(i)));
+        }
+        return result;
+    }
+
+    @Override
     public CompanyDTO addComapy(Company company) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -87,8 +98,36 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public List<CompanyDTO> filterByCountryForCard(Long countryId) {
+        List<Company> list = this.repository.filterByCountryForCard(countryId);
+        List<CompanyDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CompanyDTO(list.get(i)));
+        }
+        return result;
+    }
+
+    @Override
     public List<CompanyDTO> filterByCity(Long cityId) {
         List<Company> list = this.repository.filterByCity(cityId);
+        if(list==null){
+            CompanyDTO companyDTO=new CompanyDTO();
+            companyDTO.setCodeError(3);
+            companyDTO.setDescriptionError("Company not found");
+            List<CompanyDTO> result=new ArrayList<>();
+            result.add(companyDTO);
+            return result;
+        }
+        List<CompanyDTO> result=new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            result.add(new CompanyDTO(list.get(i)));
+        }
+        return result;
+    }
+
+    @Override
+    public List<CompanyDTO> filterByCityForCard(Long cityId) {
+        List<Company> list = this.repository.filterByCityForCard(cityId);
         if(list==null){
             CompanyDTO companyDTO=new CompanyDTO();
             companyDTO.setCodeError(3);

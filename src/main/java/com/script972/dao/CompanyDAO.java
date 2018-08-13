@@ -40,6 +40,11 @@ public class CompanyDAO implements CompanyRepository {
     }
 
     @Override
+    public List<Company> findAllForCardList() {
+        return (List<Company>) entityManager.createQuery("from Company as company where company.accessForCard=true and company.available=true").getResultList();
+    }
+
+    @Override
     public Company addCompany(Company company) {
         entityManager.persist(company);
         return company;
@@ -76,8 +81,26 @@ public class CompanyDAO implements CompanyRepository {
     }
 
     @Override
+    public List<Company> filterByCountryForCard(Long countryId) {
+        List resultList=entityManager.createNativeQuery("SELECT DISTINCT\n" +
+                        "  company.* \n" +
+                        "FROM\n" +
+                        "  company\n" +
+                        "WHERE\n" +
+                        "  company.city_id in (SELECT id FROM city WHERE country_id in (SELECT id FROM country WHERE id = ?)) " +
+                        "AND company.available=TRUE AND company.access_for_card= TRUE ORDER BY company.scores",
+                Company.class).setParameter(1, countryId).getResultList();
+        List<Company> result=new ArrayList<>();
+        for (int i = 0; i < resultList.size(); i++) {
+            result.add((Company)resultList.get(i));
+        }
+        return result;
+    }
+
+    @Override
     public List<Company> filterByCity(Long cityId) {
-        return (List<Company>) entityManager.createQuery("from Company as co where co.city.id = :paramCity")
+        return (List<Company>) entityManager.createQuery("from Company as co where co.city.id = :paramCity  and " +
+                " co.available=true")
                 .setParameter("paramCity", cityId)
                 .getResultList();
       /*  return (List<Company>) entityManager.createNativeQuery("SELECT DISTINCT\n" +
@@ -88,5 +111,13 @@ public class CompanyDAO implements CompanyRepository {
                         "  company.city_id in (SELECT id FROM city WHERE country_id in (SELECT id FROM country WHERE id = ?)) " +
                         "AND company.available=TRUE ORDER BY company.scores",
                 Company.class).setParameter(1, cityId).getResultList();*/
+    }
+
+    @Override
+    public List<Company> filterByCityForCard(Long cityId) {
+        return (List<Company>) entityManager.createQuery("from Company as co where co.city.id = :paramCity and co.accessForCard=true and " +
+                " co.available=true")
+                .setParameter("paramCity", cityId)
+                .getResultList();
     }
 }

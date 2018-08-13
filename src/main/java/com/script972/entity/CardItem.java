@@ -1,8 +1,10 @@
 package com.script972.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.script972.dto.CardItemDTO;
 import com.script972.dto.CardItemPutDTO;
 import org.joda.time.DateTime;
+import org.springframework.security.access.method.P;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -278,5 +280,35 @@ public class CardItem {
                 ", cardGroup=" + cardGroup +
                 ", accessUsers=" + accessUsers +
                 '}';
+    }
+
+    /**
+     * Method for updating item card
+     *
+     * @param itemCard
+     */
+    public void updateCardItem(CardItemDTO itemCard) {
+        if(itemCard.getTitle()!=null)
+            this.title = itemCard.getTitle();
+        //сan not update auther
+        if(itemCard.getNumber()!=null && !itemCard.getNumber().isEmpty()){
+            this.number = itemCard.getNumber();
+        }
+        //pass card group
+        if(itemCard.getDiscount()!=0){
+            this.discount = itemCard.getDiscount();
+        }
+        if(itemCard.getCurrency()!=null && !itemCard.getCurrency().isEmpty()){
+            this.currency = itemCard.getCurrency();
+        }
+        //access user pass
+        //company user pass
+        //date added pass
+        if(itemCard.getFacePhoto()!=null && !itemCard.getFacePhoto().isEmpty()) {
+            this.facePhoto = itemCard.getFacePhoto();
+        }
+        if(itemCard.getBackPhoto()!=null && !itemCard.getFacePhoto().isEmpty()){
+            this.backPhoto = itemCard.getBackPhoto();
+        }
     }
 }

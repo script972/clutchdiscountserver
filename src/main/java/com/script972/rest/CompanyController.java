@@ -28,9 +28,15 @@ public class CompanyController {
     private CloudStorageHepler cloudStorageHelper;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<CompanyDTO> loadAll() {
         return this.service.findAll();
+    }
+
+    @GetMapping("/card")
+    @PreAuthorize("hasRole('USER')")
+    public List<CompanyDTO> loadAllForCompany() {
+        return this.service.findAllForCardList();
     }
 
     @GetMapping("/{companyid}")
@@ -45,10 +51,22 @@ public class CompanyController {
         return this.service.filterByCountry(countryId);
     }
 
+    @RequestMapping( method = GET, value= "/card/filtercountry/{countryId}")
+    @PreAuthorize("hasRole('USER')")
+    public List<CompanyDTO> filterByCountryForCard(@PathVariable Long countryId) {
+        return this.service.filterByCountryForCard(countryId);
+    }
+
     @GetMapping("/filtercity/{cityId}")
     @PreAuthorize("hasRole('USER')")
     public List<CompanyDTO> filterByCity(@PathVariable Long cityId) {
         return this.service.filterByCity(cityId);
+    }
+
+    @GetMapping("/card/filtercity/{cityId}")
+    @PreAuthorize("hasRole('USER')")
+    public List<CompanyDTO> filterByCityForCard(@PathVariable Long cityId) {
+        return this.service.filterByCityForCard(cityId);
     }
 
 

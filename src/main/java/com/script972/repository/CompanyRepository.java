@@ -14,6 +14,10 @@ public interface CompanyRepository {
 
     List<Company> findAll();
 
+    List<Company> findAllForCardList();
+
+    List<Company> filterByCountryForCard(Long countryId);
+
     Company addCompany(Company company);
 
     void addLogoToComapny(String imageStr, String id);
@@ -21,4 +25,6 @@ public interface CompanyRepository {
     List filterByCountry(Long countryId);
 
     List<Company> filterByCity(Long cityId);
+
+    List<Company> filterByCityForCard(Long cityId);
 }

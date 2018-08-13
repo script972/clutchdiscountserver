@@ -16,12 +16,17 @@ public interface CompanyService {
 
     List<CompanyDTO> findAll();
 
+    List<CompanyDTO> findAllForCardList();
+
     CompanyDTO addComapy(Company company);
 
     void addLogoToCompany(String imageStr, String id);
 
     List<CompanyDTO> filterByCountry(Long countryId);
 
+    List<CompanyDTO> filterByCountryForCard(Long countryId);
+
     List<CompanyDTO> filterByCity(Long cityId);
 
+    List<CompanyDTO> filterByCityForCard(Long cityId);
 }

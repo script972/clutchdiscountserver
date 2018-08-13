@@ -80,6 +80,11 @@ public class Company {
     @Column(name = "notice")
     private String notice;
 
+    /**
+     * if can add card for comapny
+     */
+    @Column(name = "access_for_card")
+    private Boolean accessForCard=true;
 
     @OneToOne
     @JoinColumn(name = "city_id")
@@ -98,10 +103,11 @@ public class Company {
     private List<PhoneNumber> phones;
 
 
+
     public Company(String title, Position position, String address, int score, Boolean available,
                    User addedBy, User agreeBy, Timestamp addedTime, Company parent, String logo,
                    String color, String site, String notice, City city, List<CardGroup> cardGroup,
-                   List<PhoneNumber> phones) {
+                   List<PhoneNumber> phones, boolean accessForCard) {
         this.title = title;
         this.position = position;
         this.address = address;
@@ -118,12 +124,11 @@ public class Company {
         this.city = city;
         this.cardGroup = cardGroup;
         this.phones = phones;
+        this.accessForCard = accessForCard;
     }
 
     public Company() {
     }
-
-
 
     public List<PhoneNumber> getPhones() {
         return phones;
@@ -271,6 +276,14 @@ public class Company {
         this.color = color;
     }
 
+    public boolean isAccessForCard() {
+        return accessForCard;
+    }
+
+    public void setAccessForCard(boolean accessForCard) {
+        this.accessForCard = accessForCard;
+    }
+
     @Override
     public String toString() {
         return "Company{" +
@@ -291,6 +304,7 @@ public class Company {
                 ", city=" + city +
                 ", cardGroup=" + cardGroup +
                 ", phones=" + phones +
+                ", accessForCard" + accessForCard +
                 '}';
     }
 }
