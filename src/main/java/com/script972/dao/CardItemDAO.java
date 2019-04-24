@@ -31,8 +31,6 @@ public class CardItemDAO implements CardRepository {
 
     @Override
     public void addItemCard(CardItem card) {
-        System.out.println(card.getFacePhoto());
-        System.out.println(card);
         entityManager.persist(card);
     }
 
@@ -54,6 +52,11 @@ public class CardItemDAO implements CardRepository {
                 "order by ca.score desc ")
                 .setParameter("auther", user)
                 .getResultList();
+    }
+
+    @Override
+    public void updateItemCard(CardItem itemCard) {
+        entityManager.merge(itemCard);
     }
 
 }

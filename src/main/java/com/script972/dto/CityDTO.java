@@ -3,9 +3,11 @@ package com.script972.dto;
 import com.script972.entity.City;
 import com.script972.entity.Country;
 import com.script972.entity.Position;
+import lombok.Data;
 
 import javax.persistence.*;
 
+@Data
 public class CityDTO extends ErrorDTO {
 
     private long id;

@@ -13,9 +13,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
-import com.script972.enums.TypePhotoPath;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,27 +40,25 @@ public class CloudStorageHepler {
      * Routing upload file to server with different prefix name
      *
      * @param filePart uploded file
-     * @param prefix   type file
      * @return url to uploaded file
      * @throws IOException
      */
-    public String uploadFile(MultipartFile filePart, final TypePhotoPath prefix) throws IOException {
-        return streamS3(filePart, prefix);
+    public String uploadFile(MultipartFile filePart) throws IOException {
+        return streamS3(filePart);
     }
 
     /**
      * Method for upload user avatar photo
      *
      * @param mpfile
-     * @param prefix
      * @return url - link to amazon service
      * @throws IOException
      */
-    private String streamS3(MultipartFile mpfile, TypePhotoPath prefix) throws IOException {
+    private String streamS3(MultipartFile mpfile) throws IOException {
         byte[] bytes = mpfile.getBytes();
         AmazonS3 amazonS3 = buildCredetionals();
         try {
-            String objectname = TypePhotoPath.dir(prefix) + "-" + System.currentTimeMillis() + "-" + mpfile.getOriginalFilename();
+            String objectname = System.currentTimeMillis() + "-" + mpfile.getOriginalFilename();
             InputStream stream = new ByteArrayInputStream(bytes);
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(bytes.length);

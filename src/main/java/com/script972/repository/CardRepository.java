@@ -18,4 +18,6 @@ public interface CardRepository {
     CardItem findById(Long id);
 
     List<CardItem> findByOwner(User byId);
+
+    void updateItemCard(CardItem itemCard);
 }

@@ -14,10 +14,10 @@ import javax.annotation.Nullable;
 public class UserProvider {
 
     @Nullable
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            User user=(User)authentication.getPrincipal();
+            User user = (User) authentication.getPrincipal();
             return user;
         }
         return null;

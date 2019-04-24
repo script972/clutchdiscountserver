@@ -1,11 +1,14 @@
 package com.script972.rest;
 
 import com.script972.dto.RegistrationUserDTO;
+import com.script972.dto.TokenDTO;
 import com.script972.dto.UserDTO;
 import com.script972.entity.User;
+import com.script972.entity.UserTokenState;
 import com.script972.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.mobile.device.Device;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,20 +56,23 @@ public class UserController {
         return this.userService.findByUsername(user.getName());
     }
 
+    @PostMapping("/existinguser")
+    public ResponseEntity isExistingUser(@RequestBody RegistrationUserDTO user){
+        Boolean res=new Boolean(userService.isExistingByUsername(user.getUsername()));
+        Map<String, String> result = new HashMap<>();
+        result.put( "result", String.valueOf(res));
+        return ResponseEntity.accepted().body(result);
 
-    @PostMapping
-    public ResponseEntity registrationUser(@RequestBody RegistrationUserDTO registrationUserDTO){
-        UserDTO user=this.userService.persistUser(registrationUserDTO);
-        ResponseEntity responseEntity;
-        if (user==null) {
-            Map<String, String> result = new HashMap<>();
-            result.put( "result", "Fail registration" );
-           return responseEntity = new ResponseEntity<>(result,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }else{
-            return responseEntity = new ResponseEntity<>(user,
-                    HttpStatus.OK);
-        }
+    }
+
+
+
+    //TODO don`t work
+    @PostMapping("/googleplus")
+    public ResponseEntity registrationUserViaGoogle(@RequestBody TokenDTO token, Device device){
+        UserTokenState resultToken = userService.registrationViaGoogle(token,device);
+        return  new ResponseEntity<>(resultToken,
+                HttpStatus.OK);
 
     }
 

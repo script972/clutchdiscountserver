@@ -25,4 +25,5 @@ public interface CardItemService {
 
     String uploadPhotoBack(MultipartFile file) throws IOException;
 
+    CardItemDTO putItemCard(CardItemDTO itemCard);
 }

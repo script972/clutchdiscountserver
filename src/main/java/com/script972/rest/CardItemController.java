@@ -26,7 +26,7 @@ public class CardItemController {
     }
 
     @GetMapping( value= "/{cardid}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public CardItemDTO loadById(@PathVariable("cardid") Long cardid) {
         return this.service.findById(cardid);
     }
@@ -40,8 +40,13 @@ public class CardItemController {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
     public CardItemDTO addItemCard(@RequestBody CardItemPutDTO itemCard) {
-        System.out.println(itemCard.getFacePhoto());
         return this.service.addItemCard(itemCard);
+    }
+
+    @PutMapping
+    @PreAuthorize("hasRole('USER')")
+    public CardItemDTO putItemCard(@RequestBody CardItemDTO itemCard){
+        return this.service.putItemCard(itemCard);
     }
 
     @PostMapping("/frontphoto")
