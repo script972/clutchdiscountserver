@@ -5,7 +5,7 @@ import com.script972.dto.CardItemPutDTO;
 import com.script972.entity.CardItem;
 import com.script972.dto.CardItemDTO;
 import com.script972.entity.User;
-import com.script972.enums.TypePhotoPath;
+import com.script972.mappers.CardItemMappers;
 import com.script972.repository.CardRepository;
 import com.script972.service.CardItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class CardItemServiceImpl implements CardItemService {
             result.setDescriptionError("Card with current id not found");
             return result;
         } else
-            return new CardItemDTO(card);
+            return CardItemMappers.cardItemEntityToDto(card);
     }
 
     @Override
@@ -54,14 +54,14 @@ public class CardItemServiceImpl implements CardItemService {
 
         List<CardItemDTO> jto = new ArrayList<>();
         for (int i = 0; i < cardItems.size(); i++) {
-            jto.add(new CardItemDTO(cardItems.get(i)));
+            jto.add(CardItemMappers.cardItemEntityToDto((cardItems.get(i))));
         }
         return jto;
     }
 
     @Override
     public CardItemDTO addItemCard(CardItemPutDTO itemCard) {
-        CardItem card = new CardItem(itemCard);
+        CardItem card = CardItemMappers.CardItemDtoToEntity(itemCard);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -76,7 +76,7 @@ public class CardItemServiceImpl implements CardItemService {
             errorCard.setDescriptionError("The Card Item was not added");
             return errorCard;
         } else {
-            return new CardItemDTO(addedCard);
+            return CardItemMappers.cardItemEntityToDto(addedCard);
         }
     }
 
@@ -92,7 +92,7 @@ public class CardItemServiceImpl implements CardItemService {
             return result;
         }
         for (int i = 0; i < list.size(); i++) {
-            result.add(new CardItemDTO(list.get(i)));
+            result.add(CardItemMappers.cardItemEntityToDto(list.get(i)));
         }
         return result;
     }
@@ -106,21 +106,20 @@ public class CardItemServiceImpl implements CardItemService {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User user = (User) authentication.getPrincipal();
             List<CardItem> cards = this.repository.findByOwner(user);
-            System.out.println(cards.size()+"Не аноним");
             if (cards.size() == 0) {
                 cardError.setDescriptionError("You have not any card");
                 cardError.setCodeError(3);
                 result.add(cardError);
                 return result;
             } else {
-                for (int i = 0; i< cards.size(); i++) {
-                    System.out.println("card="+i);
+                for (int i = 0; i < cards.size(); i++) {
+                    System.out.println("card=" + i);
                     cardError.setDescriptionError("You have not any card");
-                    result.add(new CardItemDTO(cards.get(i)));
-                    return result;
+                    result.add(CardItemMappers.cardItemEntityToDto(cards.get(i)));
                 }
+                return result;
             }
-        }else{
+        } else {
             cardError.setCodeError(4);
             cardError.setDescriptionError("Detect user failed");
             result.add(cardError);
@@ -131,12 +130,12 @@ public class CardItemServiceImpl implements CardItemService {
 
     @Override
     public String uploadPhotoFront(MultipartFile file) throws IOException {
-        return cloudStorageHelper.uploadFile(file, TypePhotoPath.CARD_PHOTO_FRONT);
+        return cloudStorageHelper.uploadFile(file);
     }
 
     @Override
     public String uploadPhotoBack(MultipartFile file) throws IOException {
-        return cloudStorageHelper.uploadFile(file, TypePhotoPath.CARD_PHOTO_BACK);
+        return cloudStorageHelper.uploadFile(file);
     }
 
     @Override

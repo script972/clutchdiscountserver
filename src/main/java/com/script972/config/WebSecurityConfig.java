@@ -4,6 +4,7 @@ import com.script972.security.TokenHelper;
 import com.script972.security.auth.RestAuthenticationEntryPoint;
 import com.script972.security.auth.TokenAuthenticationFilter;
 import com.script972.service.impl.CustomUserDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Autowired

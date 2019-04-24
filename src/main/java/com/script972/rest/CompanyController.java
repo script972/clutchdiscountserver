@@ -3,7 +3,6 @@ package com.script972.rest;
 import com.script972.components.CloudStorageHepler;
 import com.script972.dto.CompanyDTO;
 import com.script972.entity.Company;
-import com.script972.enums.TypePhotoPath;
 import com.script972.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -79,7 +78,7 @@ public class CompanyController {
     @RequestMapping(method = POST, value = "/uploadphoto", produces = MediaType.TEXT_PLAIN_VALUE)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity uploadPhoto(@RequestParam("file") MultipartFile file) throws IOException{
-        String url = cloudStorageHelper.uploadFile(file, TypePhotoPath.COMPANY_LOGO);
+        String url = cloudStorageHelper.uploadFile(file);
         return ResponseEntity.ok(url);
     }
 

@@ -22,7 +22,7 @@ public interface CompanyRepository {
 
     void addLogoToComapny(String imageStr, String id);
 
-    List filterByCountry(Long countryId);
+    List<Company> filterByCountry(Long countryId);
 
     List<Company> filterByCity(Long cityId);
 

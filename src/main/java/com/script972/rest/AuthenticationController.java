@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +57,7 @@ public class AuthenticationController {
             @RequestBody JwtAuthenticationRequest authenticationRequest,
             HttpServletResponse response,
             Device device
-    ) throws AuthenticationException, IOException {
+    ) throws AuthenticationException {
 
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
@@ -67,7 +66,6 @@ public class AuthenticationController {
                         authenticationRequest.getPassword()
                 )
         );
-
         // Inject into security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -85,18 +83,12 @@ public class AuthenticationController {
             HttpServletResponse response,
             Principal principal
             ) {
-
         String authToken = tokenHelper.getToken( request );
-
         Device device = deviceProvider.getCurrentDevice(request);
 
-
         if (authToken != null && principal != null) {
-
-            // TODO check user password last update
             String refreshedToken = tokenHelper.refreshToken(authToken, device);
             int expiresIn = tokenHelper.getExpiredIn(device);
-
             return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn));
         } else {
             UserTokenState userTokenState = new UserTokenState();
