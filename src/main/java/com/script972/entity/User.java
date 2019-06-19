@@ -1,10 +1,7 @@
 package com.script972.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.script972.dto.RegistrationUserDTO;
 import lombok.Data;
-import org.joda.time.DateTime;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -20,18 +17,12 @@ import static javax.persistence.TemporalType.TIMESTAMP;
  */
 @Data
 @Entity
-@Table(name="USERS")
-public class User implements UserDetails {
+@Table(name = "USERS")
+public class User extends BaseEntity implements UserDetails {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "username")
-    private String username;
-
-    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -41,30 +32,23 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "scores")
     private int score;
 
-    @Column(name = "face_photo")
-    private String facePhoto;
-
-    @Column(name = "google_plus")
-    private Boolean googlePlus;
-
-    @OneToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @Column(name = "facebook_id")
+    private String facebookid;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "enabled")
-    private boolean enabled=true;
+    private boolean enabled = true;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
+
+    @Column(name = "locale")
+    private String locale;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
@@ -104,4 +88,14 @@ public class User implements UserDetails {
         return true;
     }
 
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return String.valueOf(super.getId());
+    }
 }

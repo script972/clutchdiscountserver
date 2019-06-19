@@ -1,18 +1,17 @@
-package com.script972.dto;
+package com.script972.dto.responce;
 
-import com.script972.entity.City;
+import com.script972.dto.ErrorDTO;
 import lombok.Data;
 
 import java.util.Date;
 
+
 @Data
-public class RegistrationUserDTO {
+public class UserDtoResponce extends ErrorDTO {
 
     private Long id;
 
     private String username;
-
-    private String password;
 
     private String firstName;
 
@@ -20,14 +19,12 @@ public class RegistrationUserDTO {
 
     private String email;
 
-    private City city;
-
     private String phoneNumber;
 
     private Date birthday;
 
     private String facePhoto;
 
-    private Boolean googlePlus;
+    private int score;
 
 }

@@ -1,14 +1,13 @@
 package com.script972.rest;
 
-import com.script972.dto.RegistrationUserDTO;
-import com.script972.dto.TokenDTO;
-import com.script972.dto.UserDTO;
+import com.script972.dto.RegistrationStepOneUserDtoRequest;
+import com.script972.dto.responce.UserDtoResponce;
 import com.script972.entity.User;
-import com.script972.entity.UserTokenState;
 import com.script972.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.mobile.device.Device;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,12 +28,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping( value = "/api/user" )
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+
     @Autowired
     private UserService userService;
 
     @RequestMapping( method = GET, value = "/{userId}" )
     @PreAuthorize("hasRole('ADMIN')")
     public User loadById( @PathVariable Long userId ) {
+        logger.info("load User By Id");
         return this.userService.findById( userId );
     }
 
@@ -46,39 +49,20 @@ public class UserController {
 
 
     /*
-     *  We are not using userService.findByUsername here(we could),
+     *  We are not using userService.findByEmail here(we could),
      *  so it is good that we are making sure that the user has role "ROLE_USER"
      *  to access this endpoint.
      */
     @GetMapping("/whoami")
     @PreAuthorize("hasRole('USER')")
     public User user(Principal user) {
-        return this.userService.findByUsername(user.getName());
+        return this.userService.findByEmail(user.getName());
     }
 
-    @PostMapping("/existinguser")
-    public ResponseEntity isExistingUser(@RequestBody RegistrationUserDTO user){
-        Boolean res=new Boolean(userService.isExistingByUsername(user.getUsername()));
-        Map<String, String> result = new HashMap<>();
-        result.put( "result", String.valueOf(res));
-        return ResponseEntity.accepted().body(result);
-
-    }
-
-
-
-    //TODO don`t work
-    @PostMapping("/googleplus")
-    public ResponseEntity registrationUserViaGoogle(@RequestBody TokenDTO token, Device device){
-        UserTokenState resultToken = userService.registrationViaGoogle(token,device);
-        return  new ResponseEntity<>(resultToken,
-                HttpStatus.OK);
-
-    }
 
     @PutMapping
-    public ResponseEntity personalInfo(@RequestBody RegistrationUserDTO registrationUserDTO){
-        UserDTO userDTO=this.userService.personalInfo(registrationUserDTO);
+    public ResponseEntity personalInfo(@RequestBody RegistrationStepOneUserDtoRequest registrationUserDTO){
+        UserDtoResponce userDTO=this.userService.personalInfo(registrationUserDTO);
         if(userDTO==null){
             Map<String, String> result = new HashMap<>();
             result.put( "result", "Fail update info" );
@@ -90,7 +74,7 @@ public class UserController {
 
     @GetMapping("/getbyphonenumber/{phonenumber}")
     @PreAuthorize("hasRole('USER')")
-    public List<UserDTO> getByPhoneNumber(@PathVariable String phonenumber){
+    public List<UserDtoResponce> getByPhoneNumber(@PathVariable String phonenumber){
         return this.userService.getByPhoneNumber(phonenumber);
     }
 

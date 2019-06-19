@@ -13,15 +13,11 @@ public class CompanyDTO  extends ErrorDTO{
 
     private String title;
 
-    private Position position;
-
     private String address;
 
     private String logo;
 
     private String site;
-
-    private City city;
 
     private String notice;
 
@@ -35,6 +31,5 @@ public class CompanyDTO  extends ErrorDTO{
      * Just big compnay for build tree
      */
     private Company parent;
-
 
 }

@@ -10,19 +10,10 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Company")
-public class Company {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Company extends BaseEntity {
 
     @Column(name = "title")
     private String title;
-
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "position_id")
-    private Position position;
 
     /**
      * Address of company office
@@ -37,7 +28,7 @@ public class Company {
     private int score;
 
     @Column(name = "available")
-    private Boolean available=true;
+    private Boolean available = true;
 
     @OneToOne
     @JoinColumn(name = "added")
@@ -85,12 +76,7 @@ public class Company {
      * if can add card for comapny
      */
     @Column(name = "access_for_card")
-    private Boolean accessForCard=true;
-
-    @OneToOne
-    @JoinColumn(name = "city_id")
-    private City city;
-
+    private Boolean accessForCard = true;
 
     @OneToMany
     @JoinColumn(name = "phones")

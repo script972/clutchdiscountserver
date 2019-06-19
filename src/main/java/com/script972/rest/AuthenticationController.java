@@ -1,25 +1,20 @@
 package com.script972.rest;
 
-import com.script972.components.DeviceProvider;
-import com.script972.dto.RegistrationUserDTO;
-import com.script972.dto.UserDTO;
-import com.script972.entity.User;
+import com.script972.dto.RegistrationStepOneUserDtoRequest;
+import com.script972.dto.responce.UserDtoResponce;
 import com.script972.entity.UserTokenState;
 import com.script972.security.TokenHelper;
 import com.script972.security.auth.JwtAuthenticationRequest;
-import com.script972.service.UserService;
-import com.script972.service.impl.CustomUserDetailsService;
+import com.script972.service.AuthenticationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,93 +27,65 @@ import java.util.Map;
  * Created by script972
  */
 
+@Api(value = "Auth Controller", description = "Rest controller for auth and logout")
 @RestController
-@RequestMapping( value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
     @Autowired
     TokenHelper tokenHelper;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationService authService;
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    @ApiOperation(value = "Log up in system ", response = UserDtoResponce.class)
+    @PostMapping
+    public ResponseEntity<UserDtoResponce> registrationUser(@RequestBody RegistrationStepOneUserDtoRequest registrationUserDTO) {
+        UserDtoResponce user = this.authService.persistUser(registrationUserDTO);
+        return new ResponseEntity(user,
+                HttpStatus.OK);
 
-    @Autowired
-    private DeviceProvider deviceProvider;
+    }
 
-    @Autowired
-    private UserService userService;
-
-
+    @ApiOperation(value = "auth in system", response = UserTokenState.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(
+    public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest,
             HttpServletResponse response,
             Device device
     ) throws AuthenticationException {
-
         // Perform the security
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
-        );
-        // Inject into security context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserTokenState result = authService.loginUser(authenticationRequest, device);
+        return ResponseEntity.ok(result);
+    }
 
-        // token creation
-        User user = (User)authentication.getPrincipal();
-        String jws = tokenHelper.generateToken( user.getUsername(), device);
-        int expiresIn = tokenHelper.getExpiredIn(device);
-        // Return the token
-        return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
+    @ApiOperation(value = "auth in via facebook", response = UserTokenState.class)
+    @PostMapping(value = "/facebook")
+    public ResponseEntity facebookLogin(@RequestParam("token") String accessToken, Device device) {
+        return ResponseEntity.ok(authService.facebookUser(accessToken, device));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-    public ResponseEntity<?> refreshAuthenticationToken(
+    public ResponseEntity<UserTokenState> refreshAuthenticationToken(
             HttpServletRequest request,
             HttpServletResponse response,
             Principal principal
-            ) {
-        String authToken = tokenHelper.getToken( request );
-        Device device = deviceProvider.getCurrentDevice(request);
-
-        if (authToken != null && principal != null) {
-            String refreshedToken = tokenHelper.refreshToken(authToken, device);
-            int expiresIn = tokenHelper.getExpiredIn(device);
-            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn));
+    ) {
+        UserTokenState userTokenState = authService.refreshAuthenticationToken(request, principal);
+        if (userTokenState != null) {
+            return ResponseEntity.ok(userTokenState);
         } else {
-            UserTokenState userTokenState = new UserTokenState();
-            return ResponseEntity.accepted().body(userTokenState);
+            return ResponseEntity.badRequest().body(new UserTokenState());
         }
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
-        userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
+        //userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
         Map<String, String> result = new HashMap<>();
-        result.put( "result", "success" );
+        result.put("result", "success");
         return ResponseEntity.accepted().body(result);
-    }
-
-    @PostMapping
-    public ResponseEntity registrationUser(@RequestBody RegistrationUserDTO registrationUserDTO){
-        UserDTO user=this.userService.persistUser(registrationUserDTO);
-        ResponseEntity responseEntity;
-        if (user==null) {
-            Map<String, String> result = new HashMap<>();
-            result.put( "result", "Fail registration" );
-            return responseEntity = new ResponseEntity<>(result,
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }else{
-            return responseEntity = new ResponseEntity<>(user,
-                    HttpStatus.OK);
-        }
-
     }
 
     static class PasswordChanger {

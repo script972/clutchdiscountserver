@@ -13,13 +13,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="AUTHORITY")
-public class Authority implements GrantedAuthority {
-
-    @JsonIgnore
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Authority extends BaseEntity implements GrantedAuthority {
 
     @JsonIgnore
     @Column(name="name")
@@ -28,6 +22,15 @@ public class Authority implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return name;
+    }
+
+
+    public static final class RoleConstance {
+        public static final String PREFIX = "ROLE_";
+
+        public static final String ADMIN = PREFIX + "ADMIN";
+        public static final String USER =  PREFIX + "USER";
+
     }
 
 }

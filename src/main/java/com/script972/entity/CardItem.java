@@ -13,11 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "CardItem")
-public class CardItem {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class CardItem extends BaseEntity {
 
     @Column(name = "title")
     private String title;
@@ -27,18 +23,6 @@ public class CardItem {
      */
     @Column(name = "numberCard")
     private String number;
-
-    /**
-     * count of discount
-     */
-    @Column(name = "discount")
-    private int discount;
-
-    /**
-     * currency of discount OR %
-     */
-    @Column(name = "currency")
-    private String currency;
 
     /**
      * Notice about card (editable by user which added card)

@@ -1,6 +1,7 @@
 package com.script972.security.auth;
 
 import com.script972.security.TokenHelper;
+import com.script972.service.impl.AccountUserDetailsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,9 +24,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private TokenHelper tokenHelper;
 
-    private UserDetailsService userDetailsService;
+    private AccountUserDetailsService userDetailsService;
 
-    public TokenAuthenticationFilter(TokenHelper tokenHelper, UserDetailsService userDetailsService) {
+    public TokenAuthenticationFilter(TokenHelper tokenHelper, AccountUserDetailsService userDetailsService) {
         this.tokenHelper = tokenHelper;
         this.userDetailsService = userDetailsService;
     }

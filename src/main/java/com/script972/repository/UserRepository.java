@@ -7,6 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by script972
  */
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername( String username );
+
+    User findByEmail(String username );
+
+    User findById(Long id);
+
+    User findByFacebookid(String id);
+
 }
 

@@ -1,9 +1,10 @@
 package com.script972.config;
 
+import com.script972.security.ReloadUserPerRequestHttpSessionSecurityContextRepository;
 import com.script972.security.TokenHelper;
 import com.script972.security.auth.RestAuthenticationEntryPoint;
 import com.script972.security.auth.TokenAuthenticationFilter;
-import com.script972.service.impl.CustomUserDetailsService;
+import com.script972.service.impl.AccountUserDetailsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,12 +21,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by script972
@@ -33,8 +28,20 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true,proxyTargetClass=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
+    @Autowired
+    private TokenHelper tokenHelper;
+
+    @Autowired
+    private AccountUserDetailsService jwtUserDetailsService;
+
+    @Autowired
+    private AccountUserDetailsService accountUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,36 +53,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new ModelMapper();
     }
 
-    @Autowired
-    private CustomUserDetailsService jwtUserDetailsService;
 
-    @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Bean
+    @Bean(name = "authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception {
-        auth.userDetailsService( jwtUserDetailsService )
-            .passwordEncoder( passwordEncoder() );
-    }
-
-    @Autowired
-    TokenHelper tokenHelper;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
-                .exceptionHandling().authenticationEntryPoint( restAuthenticationEntryPoint ).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**", "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
+                .permitAll()
                 .anyRequest().authenticated().and()
-                .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
+                .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService),
+                        BasicAuthenticationFilter.class);
 
         http.csrf().disable();
     }
@@ -99,7 +94,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.js",
                 "/**/*.png",
                 "/**/*.jpg"
-            );
-
+        );
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(accountUserDetailsService);
+    }
+
+    @Bean
+    public ReloadUserPerRequestHttpSessionSecurityContextRepository userDetailContextRepository() {
+        return new ReloadUserPerRequestHttpSessionSecurityContextRepository();
+    }
+
 }

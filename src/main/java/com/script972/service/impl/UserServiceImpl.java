@@ -5,22 +5,18 @@ import com.google.gson.GsonBuilder;
 import com.script972.components.CloudStorageHepler;
 import com.script972.components.UserProvider;
 import com.script972.dto.GoogleOathDTO;
-import com.script972.dto.RegistrationUserDTO;
-import com.script972.dto.TokenDTO;
-import com.script972.dto.UserDTO;
+import com.script972.dto.RegistrationStepOneUserDtoRequest;
+import com.script972.dto.responce.UserDtoResponce;
 import com.script972.entity.User;
-import com.script972.entity.UserTokenState;
 import com.script972.mappers.UserMappers;
 import com.script972.repository.UserRRepository;
 import com.script972.repository.UserRepository;
-import com.script972.security.TokenHelper;
 import com.script972.service.UserService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mobile.device.Device;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,13 +46,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserProvider userProvider;
     @Autowired
-    TokenHelper tokenHelper;
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @Override
-    public User findByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username);
     }
 
     public User findById(Long id) throws AccessDeniedException {
@@ -68,44 +63,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isExistingByUsername(String username) throws UsernameNotFoundException {
-        if (username == null)
-            throw new UsernameNotFoundException("User name parametr passed.");
-        return findByUsername(username) != null;
+    public boolean isExistingByEmail(String username) {
+        return findByEmail(username) != null;
     }
 
     @Override
-    public UserDTO persistUser(RegistrationUserDTO registrationUserDTO) {
-        User user = UserMappers.userDtoToEntity(registrationUserDTO);
-        String password = passwordEncoder.encode(user.getPassword());
-        user.setPassword(password);
-        if (!this.isExistingByUsername(registrationUserDTO.getUsername())) {
-            this.registration.addNewUser(user);
-            User u = userRepository.findByUsername(registrationUserDTO.getUsername());
-            return UserMappers.userEntityToDto(u);
-        } else {
-            return null;
-        }
-
-    }
-
-    @Override
-    public UserDTO personalInfo(RegistrationUserDTO registrationUserDTO) {
+    public UserDtoResponce personalInfo(RegistrationStepOneUserDtoRequest registrationUserDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
      /*   if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User user = (User) authentication.getPrincipal();
 //            user.setRegistrationUser(registrationUserDTO);
             this.registration.updateUserName(user);
-            return new UserDTO(this.findById(user.getId()));
+            return new UserDtoResponce(this.findById(user.getId()));
         }*/
         return null;
 
     }
 
     @Override
-    public List<UserDTO> getByPhoneNumber(String phonenumber) {
+    public List<UserDtoResponce> getByPhoneNumber(String phonenumber) {
         String[] numbers = phonenumber.split("&");
-        List<UserDTO> list = new ArrayList<>();
+        List<UserDtoResponce> list = new ArrayList<>();
         for (String number : numbers) {
             User user = this.registration.getPhoneNumber(number);
             if (user != null)
@@ -126,26 +104,8 @@ public class UserServiceImpl implements UserService {
         return url;
     }
 
-    @Override
-    public UserTokenState registrationViaGoogle(TokenDTO token, Device device) {
-       /* GoogleOathDTO googleOathDTO = getAccountFromGoogle(token.getToken());
-        RegistrationUserDTO registrationUserDTO = new RegistrationUserDTO(googleOathDTO);
-        registrationUserDTO.setGooglePlus(true);
-
-        this.persistUser(registrationUserDTO);
-
-
-        String jws = tokenHelper.generateToken(registrationUserDTO.getUsername(), device);
-        int expiresIn = tokenHelper.getExpiredIn(device);
-        // Return the token
-        return new UserTokenState(jws, expiresIn);*/
-
-        return null;
-
-    }
-
     /**
-     * Google token request
+     * Try to get information from google by token
      *
      * @param token
      * @return

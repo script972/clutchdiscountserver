@@ -1,5 +1,6 @@
 package com.script972.dto;
 
+import com.script972.dto.responce.UserDtoResponce;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -12,7 +13,7 @@ public class CardItemDTO extends ErrorDTO {
 
     private String title;
 
-    private UserDTO auther;
+    private UserDtoResponce auther;
 
     /**
      * Card Number
@@ -32,7 +33,7 @@ public class CardItemDTO extends ErrorDTO {
     /**
      * List of access user for this card
      */
-    private List<UserDTO> accessUsers;
+    private List<UserDtoResponce> accessUsers;
 
     private CompanyDTO company;
 
